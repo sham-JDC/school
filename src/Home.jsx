@@ -1,452 +1,507 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import './Home.css'; // Import the dedicated CSS file
-
-// --- Helper Components ---
-
-const MobileMenu = ({ isOpen, closeMenu, handleAnchorClick }) => (
-    <div id="mobile-menu" className={`mobile-menu-panel ${isOpen ? 'open' : 'closed'} md-hidden`}>
-        <div className="mobile-menu-items">
-            <a href="#" onClick={(e) => handleAnchorClick(e, '#top')} className="menu-item active">Home</a>
-            <a href="#about" onClick={(e) => handleAnchorClick(e, '#about')} className="menu-item">About Us</a>
-            <a href="#schools" onClick={(e) => handleAnchorClick(e, '#schools')} className="menu-item">Our Schools</a>
-            <a href="#contact" onClick={(e) => handleAnchorClick(e, '#contact')} className="menu-item">Contact</a>
-        </div>
-    </div>
-);
-
-// --- Main Home Component ---
+import React, { useState, useEffect, useRef } from "react";
+import { ArrowDown } from "lucide-react";
+import image from "./assets/Yoga Session1.jpg";
+import image1 from "./assets/Secret Santa1.jpg";
+import image2 from "./assets/Childrens Day with Naseema.jpg";
 
 const Home = () => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const sliderRef = useRef(null);
+  // --- THEME CONSTANTS ---
+  const green = "#1b7f3a";
+  const yellowBg = "#fffbea";
+  const borderGreen = "#8ac926";
+  const lightGreen = "#d4f8d4";
+  const darkGreen = "#0f4c23";
 
-    const slidesData = [
-        {
-            img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-            alt: "Teacher helping student",
-        },
-        {
-            img: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-            alt: "Students playing",
-        },
-        {
-            img: "https://images.unsplash.com/photo-1577896337318-2838d7c9f562?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
-            alt: "Art class",
-        },
-    ];
-    const totalSlides = slidesData.length;
+  // --- SLIDER STATE ---
+  const [activeSlide, setActiveSlide] = useState(0);
+  const slides = [image, image1, image2];
 
-    // Slider logic
-    const updateSlider = useCallback(() => {
-        if (sliderRef.current) {
-            const offset = -(currentSlide * 100);
-            sliderRef.current.style.transform = `translateX(${offset}%)`;
-        }
-    }, [currentSlide]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
-    const nextSlide = useCallback(() => {
-        setCurrentSlide(prev => (prev + 1) % totalSlides);
-    }, [totalSlides]);
+  // --- SCROLL ANIMATION ---
+  const revealRefs = useRef([]);
 
-    const prevSlide = () => {
-        setCurrentSlide(prev => (prev - 1 + totalSlides) % totalSlides);
-    };
-
-    // Auto-play interval
-    useEffect(() => {
-        updateSlider();
-        const slideInterval = setInterval(nextSlide, 5000); // 5 seconds
-        return () => clearInterval(slideInterval);
-    }, [currentSlide, nextSlide, updateSlider]);
-
-    // Function for smooth scrolling
-    const handleAnchorClick = (e, targetId) => {
-        e.preventDefault();
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 80, // Adjust for fixed nav height
-                behavior: 'smooth'
-            });
-            setIsMobileMenuOpen(false); // Close mobile menu
-        }
-    };
-
-    return (
-        <div className="page-container">
-            {/* Navigation */}
-            <nav className="navigation-bar sticky-top">
-                <div className="nav-content-wrapper">
-                    <div className="nav-logo-group">
-                        <a href="#" className="nav-logo" onClick={(e) => handleAnchorClick(e, '#top')}>
-                            <div className="logo-icon-bg">
-                                <i className="fas fa-child"></i>
-                            </div>
-                            <div className="logo-text">
-                                <span className="logo-title">JDC SPARSHA</span>
-                                <span className="logo-subtitle">GROUP OF SCHOOLS</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    {/* Desktop Menu */}
-                    <div className="desktop-menu">
-                        <a href="#" onClick={(e) => handleAnchorClick(e, '#top')} className="desktop-link active-link">Home</a>
-                        <a href="#about" onClick={(e) => handleAnchorClick(e, '#about')} className="desktop-link">About Us</a>
-                        <a href="#schools" onClick={(e) => handleAnchorClick(e, '#schools')} className="desktop-link">Our Schools</a>
-                        <a href="#admissions" onClick={(e) => handleAnchorClick(e, '#admissions')} className="desktop-link">Admissions</a>
-                        <a href="#contact" onClick={(e) => handleAnchorClick(e, '#contact')} className="cta-button">Contact Us</a>
-                    </div>
-
-                    {/* Mobile menu button */}
-                    <div className="mobile-menu-button-wrapper">
-                        <button
-                            id="mobile-menu-btn"
-                            className="mobile-menu-button"
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            aria-expanded={isMobileMenuOpen}
-                            aria-controls="mobile-menu"
-                        >
-                            <i className="fas fa-bars text-2xl"></i>
-                        </button>
-                    </div>
-                </div>
-
-                {/* Mobile Menu Panel */}
-                <MobileMenu isOpen={isMobileMenuOpen} closeMenu={() => setIsMobileMenuOpen(false)} handleAnchorClick={handleAnchorClick} />
-            </nav>
-
-            {/* Hero Section with Slider */}
-            <div id="top" className="hero-section">
-                <div ref={sliderRef} className="hero-slider-container">
-                    {slidesData.map((slide, index) => (
-                        <div key={index} className="hero-slide">
-                            <img src={slide.img} alt={slide.alt} className="hero-image" />
-                            <div className="hero-overlay"></div>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Hero Content */}
-                <div className="hero-content-wrapper">
-                    <div className="hero-content fade-in-up">
-                        <h1 className="hero-title">
-                            Empowering Every Child to <br /> <span className="text-green-300">Reach Their Full Potential</span>
-                        </h1>
-                        <p className="hero-subtitle">
-                            A Unique Educational Ecosystem Supporting Diverse Needs.
-                        </p>
-                        <div className="hero-cta-group">
-                            <a href="#schools" onClick={(e) => handleAnchorClick(e, '#schools')} className="hero-cta-primary">
-                                Explore Our Schools
-                            </a>
-                            <a href="#contact" onClick={(e) => handleAnchorClick(e, '#contact')} className="hero-cta-secondary">
-                                Contact Us
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Slider Controls */}
-                <button
-                    id="prevSlide"
-                    onClick={prevSlide}
-                    className="slider-control left"
-                    aria-label="Previous slide"
-                >
-                    <i className="fas fa-chevron-left text-2xl"></i>
-                </button>
-                <button
-                    id="nextSlide"
-                    onClick={nextSlide}
-                    className="slider-control right"
-                    aria-label="Next slide"
-                >
-                    <i className="fas fa-chevron-right text-2xl"></i>
-                </button>
-            </div>
-
-            {/* Featured Quote Banner */}
-            <div className="quote-banner">
-                <div className="quote-content">
-                    <i className="fas fa-quote-left quote-icon"></i>
-                    <h2 className="quote-text">
-                        "Inclusive Education is a Right, not a Privilege"
-                    </h2>
-                    <i className="fas fa-quote-right quote-icon"></i>
-                </div>
-            </div>
-
-            {/* Introduction / Overview Section */}
-            <section id="schools" className="section-schools">
-                <div className="content-wrapper">
-                    <div className="section-header">
-                        <h2 className="section-title">A School for Everyone</h2>
-                        <div className="separator"></div>
-                        <p className="section-description">
-                            JDC SPARSHA Group of Schools offers a unique, inclusive environment. We house three distinct institutions to ensure tailored care and curriculum for every student.
-                        </p>
-                    </div>
-
-                    <div className="card-grid">
-                        {/* School Card 1 */}
-                        <div className="school-card">
-                            <div className="card-header bg-light">
-                                <i className="fas fa-shapes card-icon"></i>
-                            </div>
-                            <div className="card-body">
-                                <h3 className="card-title">Tom and Jerry Nursery School</h3>
-                                <p className="card-text">Catering to normal children (2 to 5 years). A regular school environment focusing on early childhood development.</p>
-                                <ul className="card-list">
-                                    <li><i className="fas fa-check list-check"></i>Play Group to UKG</li>
-                                    <li><i className="fas fa-check list-check"></i>Activity Based Learning</li>
-                                </ul>
-                                <a href="#" className="card-link">Learn More <i className="fas fa-arrow-right ml-1"></i></a>
-                            </div>
-                        </div>
-
-                        {/* School Card 2 */}
-                        <div className="school-card">
-                            <div className="card-header bg-light">
-                                <i className="fas fa-hands-holding-child card-icon"></i>
-                            </div>
-                            <div className="card-body">
-                                <h3 className="card-title">Tom and Jerry Special School</h3>
-                                <p className="card-text">Dedicated to children with special needs. We provide specialized therapies and individualized care.</p>
-                                <ul className="card-list">
-                                    <li><i className="fas fa-check list-check"></i>Cerebral Palsy, Autism, MR</li>
-                                    <li><i className="fas fa-check list-check"></i>Therapy & Development</li>
-                                </ul>
-                                <a href="#" className="card-link">Learn More <i className="fas fa-arrow-right ml-1"></i></a>
-                            </div>
-                        </div>
-
-                        {/* School Card 3 */}
-                        <div className="school-card">
-                            <div className="card-header bg-light">
-                                <i className="fas fa-book-open-reader card-icon"></i>
-                            </div>
-                            <div className="card-body">
-                                <h3 className="card-title">Sparsha Academy</h3>
-                                <p className="card-text">Catering to children with Learning Disabilities & Slow Learners. Following the NIOS curriculum.</p>
-                                <ul className="card-list">
-                                    <li><i className="fas fa-check list-check"></i>NIOS Syllabus (Class 1-10)</li>
-                                    <li><i className="fas fa-check list-check"></i>Vocational Goals</li>
-                                </ul>
-                                <a href="#" className="card-link">Learn More <i className="fas fa-arrow-right ml-1"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Mission & Vision */}
-            <section id="about" className="section-mission-vision">
-                <div className="content-wrapper">
-                    <div className="mission-vision-grid">
-                        {/* Content */}
-                        <div className="mission-vision-content">
-                            <div className="mission-block">
-                                <div className="icon-heading-group">
-                                    <div className="icon-primary-bg">
-                                        <i className="fas fa-bullseye icon-white"></i>
-                                    </div>
-                                    <h2 className="content-heading">Our Mission</h2>
-                                </div>
-                                <p className="content-text border-secondary">
-                                    Our mission is to **IMPART** quality education, Help all the children gain overall knowledge, **INSPIRE** them to reach their full potential in all aspects, **INSTILL** good human values and confidence.
-                                </p>
-                            </div>
-
-                            <div className="vision-block">
-                                <div className="icon-heading-group">
-                                    <div className="icon-secondary-bg">
-                                        <i className="fas fa-eye icon-white"></i>
-                                    </div>
-                                    <h2 className="content-heading">Our Vision</h2>
-                                </div>
-                                <p className="content-text border-primary">
-                                    To offer unique services and inculcate necessary skillsets for a seamless adaptability and employability in our Society.
-                                    <br /><span className="vision-goal">Goal: Creating a Vocational School offering NIOS Vocational Education.</span>
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Image Grid */}
-                        <div className="image-grid">
-                            <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Students learning" className="mission-img-1" />
-                            <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Inclusive play" className="mission-img-2" />
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Why Join Us Section */}
-            <section className="section-why-join">
-                <div className="content-wrapper">
-                    <div className="section-header">
-                        <h2 className="section-title">Why Join Us?</h2>
-                        <div className="separator"></div>
-                        <p className="section-description-small">We nurture growth through personalized attention and a holistic approach.</p>
-                    </div>
-
-                    <div className="feature-grid">
-                        {/* Feature 1 */}
-                        <div className="feature-card">
-                            <div className="feature-icon-wrapper">
-                                <i className="fas fa-users feature-icon"></i>
-                            </div>
-                            <div>
-                                <h4 className="feature-title">Friendly Atmosphere</h4>
-                                <p className="feature-text">Personalized care with love and affection in a cordial, safe environment.</p>
-                            </div>
-                        </div>
-
-                        {/* Feature 2 */}
-                        <div className="feature-card">
-                            <div className="feature-icon-wrapper">
-                                <i className="fas fa-bullseye feature-icon"></i>
-                            </div>
-                            <div>
-                                <h4 className="feature-title">Targeted Learning</h4>
-                                <p className="feature-text">Individual Learning Programmes created for physical, mental, and social development.</p>
-                            </div>
-                        </div>
-
-                        {/* Feature 3 */}
-                        <div className="feature-card">
-                            <div className="feature-icon-wrapper">
-                                <i className="fas fa-chalkboard-teacher feature-icon"></i>
-                            </div>
-                            <div>
-                                <h4 className="feature-title">Low Student-Teacher Ratio</h4>
-                                <p className="feature-text">We adhere to a strict 10:1 ratio ensuring every child receives individual attention.</p>
-                            </div>
-                        </div>
-
-                        {/* Feature 4 */}
-                        <div className="feature-card">
-                            <div className="feature-icon-wrapper">
-                                <i className="fas fa-running feature-icon"></i>
-                            </div>
-                            <div>
-                                <h4 className="feature-title">Holistic Activities</h4>
-                                <p className="feature-text">From Yoga and Bhajans to Sports and Arts, we focus on overall development.</p>
-                            </div>
-                        </div>
-
-                         {/* Feature 5 */}
-                         <div className="feature-card">
-                            <div className="feature-icon-wrapper">
-                                <i className="fas fa-user-md feature-icon"></i>
-                            </div>
-                            <div>
-                                <h4 className="feature-title">Expert Therapy</h4>
-                                <p className="feature-text">Physiotherapy, Speech Therapy, and Sensory Development by professionals.</p>
-                            </div>
-                        </div>
-
-                         {/* Feature 6 */}
-                         <div className="feature-card">
-                            <div className="feature-icon-wrapper">
-                                <i className="fas fa-bus feature-icon"></i>
-                            </div>
-                            <div>
-                                <h4 className="feature-title">Safe Transportation</h4>
-                                <p className="feature-text">GPS-enabled vans with escorts ensuring safe travel for all students.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CSR Initiative */}
-            <section className="section-csr">
-                <div className="content-wrapper">
-                    <div className="csr-banner">
-                        <div className="csr-content-group">
-                            <div className="csr-text">
-                                <h3 className="csr-tag">Giving Back</h3>
-                                <h2 className="csr-title">CSR Initiative</h2>
-                                <p className="csr-description">
-                                    Despite our operation size, we are helping many underprivileged children with **Free Education, Fee Waivers, Free Books, and Uniforms**. We believe that financial constraints should should never stand in the way of a child's future.
-                                </p>
-                                <a href="#contact" onClick={(e) => handleAnchorClick(e, '#contact')} className="csr-cta">Support Our Cause</a>
-                            </div>
-                            <div className="csr-icon-wrapper">
-                                <i className="fas fa-heart csr-icon"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Footer */}
-            <footer id="contact" className="main-footer">
-                <div className="content-wrapper">
-                    <div className="footer-grid">
-                        {/* Brand */}
-                        <div className="footer-brand">
-                            <div className="footer-logo-group">
-                                <div className="footer-logo-icon-bg">
-                                    <i className="fas fa-child"></i>
-                                </div>
-                                <span className="footer-logo-title">JDC SPARSHA</span>
-                            </div>
-                            <p className="footer-tagline">
-                                Imparting quality education and inspiring children to reach their full potential.
-                            </p>
-                            <div className="social-links">
-                                <a href="#" className="social-link" aria-label="Facebook"><i className="fab fa-facebook fa-lg"></i></a>
-                                <a href="#" className="social-link" aria-label="Instagram"><i className="fab fa-instagram fa-lg"></i></a>
-                                <a href="#" className="social-link" aria-label="YouTube"><i className="fab fa-youtube fa-lg"></i></a>
-                            </div>
-                        </div>
-
-                        {/* Quick Links */}
-                        <div className="footer-links">
-                            <h3 className="footer-heading">Quick Links</h3>
-                            <ul className="footer-list">
-                                <li><a href="#" onClick={(e) => handleAnchorClick(e, '#top')} className="footer-link-item">Home</a></li>
-                                <li><a href="#about" onClick={(e) => handleAnchorClick(e, '#about')} className="footer-link-item">About Us</a></li>
-                                <li><a href="#schools" onClick={(e) => handleAnchorClick(e, '#schools')} className="footer-link-item">Tom and Jerry Nursery</a></li>
-                                <li><a href="#schools" onClick={(e) => handleAnchorClick(e, '#schools')} className="footer-link-item">Special School</a></li>
-                                <li><a href="#schools" onClick={(e) => handleAnchorClick(e, '#schools')} className="footer-link-item">Sparsha Academy</a></li>
-                            </ul>
-                        </div>
-
-                        {/* Contact Info */}
-                        <div className="footer-contact">
-                            <h3 className="footer-heading">Contact Us</h3>
-                            <ul className="footer-contact-list">
-                                <li className="contact-item map-marker">
-                                    <i className="fas fa-map-marker-alt icon-accent"></i>
-                                    <span className="contact-text">Sri Vithala Rukhmini Temple Campus, Kengeri Hobli (Kodipalya), Bangalore - 560060</span>
-                                </li>
-                                <li className="contact-item">
-                                    <i className="fas fa-phone icon-accent"></i>
-                                    <span className="contact-text">99015 12779</span>
-                                </li>
-                                <li className="contact-item">
-                                    <i className="fas fa-envelope icon-accent"></i>
-                                    <span className="contact-text">jdc.office@jdcsparsha.org</span>
-                                </li>
-                                <li className="contact-item">
-                                    <i className="fas fa-globe icon-accent"></i>
-                                    <span className="contact-text">www.jdcsparsha.org</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className="footer-bottom">
-                        <p>&copy; 2024 JDC SPARSHA Educational Trust. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
-        </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-active");
+          }
+        });
+      },
+      { threshold: 0.15 }
     );
+
+    revealRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const addRef = (el) => {
+    if (el && !revealRefs.current.includes(el)) {
+      revealRefs.current.push(el);
+    }
+  };
+
+  // --- STYLES ---
+  const outer = {
+    backgroundColor: "#ccf5d3",
+    minHeight: "100vh",
+    fontFamily: "'Poppins', sans-serif",
+    color: "#333",
+    overflowX: "hidden",
+  };
+
+  const container = {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "80px 20px",
+  };
+
+  const card = {
+    background: yellowBg,
+    border: `3px solid ${borderGreen}`,
+    borderRadius: "22px",
+    padding: "15px 30px",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+    transition: "all 0.35s ease",
+    position: "relative",
+    overflow: "hidden",
+    height: "100%",
+  };
+
+  const iconBox = {
+    width: "80px",
+    height: "80px",
+    borderRadius: "50%",
+    background: lightGreen,
+    border: `3px dashed ${borderGreen}`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "3rem",
+    margin: "0 auto 20px",
+  };
+
+  const sectionTitle = {
+    textAlign: "center",
+    fontSize: "36px",
+    color: green,
+    fontWeight: "700",
+    marginBottom: "50px",
+    position: "relative",
+    display: "inline-block",
+    left: "50%",
+    transform: "translateX(-50%)",
+  };
+
+  return (
+    <div style={outer}>
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+
+          /* Scroll Animations */
+          .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+          }
+          .reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          /* Card Hover Effect */
+          .card-hover:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(27, 127, 58, 0.15);
+            border-color: ${green};
+          }
+
+          /* Hero Animations */
+          @keyframes zoomSlow {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+          }
+          @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+          }
+          @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
+            100% { transform: translate(0, 0); }
+          }
+        `}
+      </style>
+
+      {/* --- HERO SECTION --- */}
+      <section
+        style={{
+          position: "relative",
+          height: "90vh",
+          width: "100%",
+          overflow: "hidden",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url(${slide})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: index === activeSlide ? 1 : 0,
+              transition: "opacity 1s ease-in-out",
+              zIndex: 1,
+              animation:
+                index === activeSlide
+                  ? "zoomSlow 15s infinite alternate"
+                  : "none",
+            }}
+          />
+        ))}
+
+        {/* Overlay */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "rgba(11, 61, 27, 0.6)",
+            zIndex: 2,
+          }}
+        ></div>
+
+        {/* Content */}
+        <div
+          style={{
+            position: "relative",
+            zIndex: 3,
+            textAlign: "center",
+            color: "white",
+            padding: "20px",
+          }}
+          className="reveal"
+          ref={addRef}
+        >
+          <h1
+            style={{
+              fontSize: "clamp(2.5rem, 5vw, 4rem)",
+              fontWeight: "700",
+              marginBottom: "20px",
+              textShadow: "0 4px 10px rgba(0,0,0,0.3)",
+            }}
+          >
+            JDC SPARSHA Group of Schools
+          </h1>
+          <p
+            style={{
+              fontSize: "clamp(1.1rem, 2vw, 1.5rem)",
+              maxWidth: "800px",
+              margin: "0 auto",
+              fontWeight: "300",
+              lineHeight: "1.6",
+            }}
+          >
+            Very Unique and Supports Diverse needs in Imparting Education
+          </p>
+          <div style={{ marginTop: "60px", animation: "bounce 2s infinite" }}>
+            <ArrowDown size={48} color="#fff" />
+          </div>
+        </div>
+      </section>
+
+      {/* --- OVERVIEW SECTION --- */}
+      <section style={container}>
+        <h2 style={sectionTitle} className="reveal" ref={addRef}>
+          Our Schools
+        </h2>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "30px",
+          }}
+        >
+          {[
+            {
+              icon: "🐱",
+              title: "Tom and Jerry Nursery School",
+              text: "Caters to Normal Children",
+            },
+            {
+              icon: "🌟",
+              title: "Tom and Jerry Special School",
+              text: "Caters to Special Children",
+            },
+            {
+              icon: "🎓",
+              title: "Sparsha Academy",
+              text: "Caters to Learning Disability Children & Slow Learners",
+            },
+          ].map((item, i) => (
+            <div
+              key={i}
+              style={card}
+              className="reveal card-hover"
+              ref={addRef}
+            >
+              <div style={iconBox}>{item.icon}</div>
+              <h3
+                style={{
+                  textAlign: "center",
+                  color: green,
+                  marginBottom: "15px",
+                  fontSize: "1.4rem",
+                }}
+              >
+                {item.title}
+              </h3>
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "#555",
+                  fontSize: "1.1rem",
+                }}
+              >
+                {item.text}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* --- MISSION & VISION --- */}
+      <section
+        style={{
+          background: `linear-gradient(135deg, ${green} 0%, ${darkGreen} 100%)`,
+          padding: "80px 20px",
+        }}
+      >
+        <div style={{ ...container, padding: 0 }}>
+          <div
+            className="reveal"
+            ref={addRef}
+            style={{
+              background: "rgba(255, 255, 255, 0.95)",
+              borderRadius: "30px",
+              padding: "50px",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "40px",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.2)",
+            }}
+          >
+            <div style={{ flex: 1, minWidth: "300px" }}>
+              <h2
+                style={{
+                  color: green,
+                  fontSize: "2.2rem",
+                  marginBottom: "20px",
+                  textTransform: "uppercase",
+                  letterSpacing: "2px",
+                }}
+              >
+                Our Mission
+              </h2>
+              <p
+                style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "#444" }}
+              >
+                Our mission is to{" "}
+                <strong style={{ color: borderGreen }}>IMPART</strong> quality
+                education, Help all the children gain overall knowledge,
+                <strong style={{ color: borderGreen }}> INSPIRE</strong> them to
+                reach their full potential in all aspects,
+                <strong style={{ color: borderGreen }}> INSTILL</strong> good
+                human values and confidence.
+              </p>
+            </div>
+
+            {/* Vertical Divider for desktop, Hidden on mobile via Flex wrap behavior roughly */}
+            <div
+              style={{
+                width: "4px",
+                background: borderGreen,
+                borderRadius: "2px",
+                display:
+                  "none" /* Logic handled by flex gap usually, keeping simple */,
+              }}
+            ></div>
+
+            <div
+              style={{
+                flex: 1,
+                minWidth: "300px",
+                borderLeft: `4px dashed ${borderGreen}`,
+                paddingLeft: "40px",
+              }}
+            >
+              <h2
+                style={{
+                  color: green,
+                  fontSize: "2.2rem",
+                  marginBottom: "20px",
+                  textTransform: "uppercase",
+                  letterSpacing: "2px",
+                }}
+              >
+                Our Vision
+              </h2>
+              <p
+                style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "#444" }}
+              >
+                Our vision is to offer unique services and inculcate necessary
+                skillsets for a seamless adaptability and employability in our
+                Society.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- CORE VALUES --- */}
+      <section style={container}>
+        <h2 style={sectionTitle} className="reveal" ref={addRef}>
+          Core Values
+        </h2>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "30px",
+          }}
+        >
+          {[
+            {
+              num: "01",
+              title: "Low Student-Teacher Ratio",
+              text: "We adhere to a very Low Student to Teacher Ratio in all our schools.",
+            },
+            {
+              num: "02",
+              title: "Personalised Care",
+              text: "We provide Personalised care, Love, and Affection to all the children.",
+            },
+            {
+              num: "03",
+              title: "Friendly Atmosphere",
+              text: "Learning happens in a very Cordial & Friendly Atmosphere.",
+            },
+          ].map((val, i) => (
+            <div
+              key={i}
+              style={{ ...card, padding: "15px" }}
+              className="reveal card-hover"
+              ref={addRef}
+            >
+              <span
+                style={{
+                  fontSize: "4rem",
+                  fontWeight: "900",
+                  color: lightGreen,
+                  lineHeight: "0.8",
+                  display: "block",
+                  marginBottom: "10px",
+                }}
+              >
+                {val.num}
+              </span>
+              <h4
+                style={{
+                  fontSize: "1.5rem",
+                  color: green,
+                  marginBottom: "15px",
+                }}
+              >
+                {val.title}
+              </h4>
+              <p style={{ color: "#555", lineHeight: "1.6" }}>{val.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* --- FUTURE GOALS --- */}
+      <section
+        style={{
+          backgroundColor: green,
+          color: "white",
+          padding: "100px 20px",
+          position: "relative",
+          overflow: "hidden",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+            zIndex: 5,
+            maxWidth: "800px",
+            margin: "0 auto",
+          }}
+          className="reveal"
+          ref={addRef}
+        >
+          <h2 style={{ fontSize: "3rem", marginBottom: "30px", color: "#fff" }}>
+            Future Goals
+          </h2>
+          <p
+            style={{ fontSize: "1.3rem", lineHeight: "1.8", color: "#e8f5e9" }}
+          >
+            Our future goals include creating a Vocational School offering
+            Vocational Education and Training Programme as per National
+            Institute of Open Schooling (NIOS) curriculum.
+          </p>
+        </div>
+
+        {/* Animated Shapes */}
+        <div
+          style={{
+            position: "absolute",
+            width: "300px",
+            height: "300px",
+            borderRadius: "50%",
+            background: borderGreen,
+            opacity: "0.2",
+            top: "-50px",
+            left: "-50px",
+            animation: "float 6s ease-in-out infinite",
+          }}
+        ></div>
+
+        <div
+          style={{
+            position: "absolute",
+            width: "400px",
+            height: "400px",
+            borderRadius: "50%",
+            background: "#fff",
+            opacity: "0.1",
+            bottom: "-100px",
+            right: "-100px",
+            animation: "float 8s ease-in-out infinite reverse",
+          }}
+        ></div>
+      </section>
+    </div>
+  );
 };
 
 export default Home;

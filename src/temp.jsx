@@ -1,303 +1,297 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+
+// Keep your local import.
+// Note: Ensure this file actually exists in your assets folder.
+import img1 from "./assets/Nursery Unit2.jpeg";
+import img2 from "./assets/Computer Room1.jpg";
+import img3 from "./assets/Indoor Gym1.jpeg";
+import img4 from "./assets/Outdoor Gym.jpeg";
+import img5 from "./assets/Mini Sports Area.jpeg";
+import img6 from "./assets/Yoga Day2.jpg";
+import img7 from "./assets/Nursery Sports Day1.jpg";
 
 const ProgramsServices = () => {
-
-  // THEME COLORS
   const green = "#1b7f3a";
   const yellowBg = "#fffbea";
   const borderGreen = "#8ac926";
 
-  // OUTER FULL-PAGE BACKGROUND (LIGHT GREEN)
+  /* ---------- IMAGE ASSETS (Placeholders) ---------- */
+  // I have used high-quality Unsplash images here.
+  // You can replace these URLs with your local imports (img2, img3, etc.) later.
+
+  const imgSpecial =img1// Therapy/Special Ed vibe
+  const imgAcademy =img1 // Classroom/Academy vibe
+
+  const imgComputer = img2;
+  const imgIndoorPlay = img3; // Ball pit/Indoor fun
+  const imgOutdoor = img4;
+  const imgIndoorSports =img5// Table Tennis/Sports
+  const imgPhysical =img7
+  const imgYoga =img6
+  /* ---------- SCROLL ANIMATION ---------- */
+  const revealRefs = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-active");
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    revealRefs.current.forEach((el) => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  const addRef = (el) => {
+    if (el && !revealRefs.current.includes(el)) {
+      revealRefs.current.push(el);
+    }
+  };
+
+  /* ---------- STYLES ---------- */
+
   const outer = {
     backgroundColor: "#ccf5d3",
     minHeight: "100vh",
-    width: "100%",
-    margin: 0,
-    padding: "30px 0",
-  };
-
-  // MAIN PAGE STYLE
-  const page = {
-    maxWidth: "1200px",
-    margin: "0 auto 30px",
-    padding: "20px",
+    padding: "50px 0",
     fontFamily: "'Poppins', sans-serif",
-    lineHeight: "1.7",
   };
 
-  // SECTION CARD
-  const section = {
-    display: "flex",
-    gap: "30px",
-    padding: "30px",
-    borderRadius: "20px",
-    marginBottom: "40px",
-    background: yellowBg,
-    border: `3px solid ${borderGreen}`,
-    boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-    alignItems: "center",
-  };
-
-  const text = { flex: 2 };
-
-  const image = {
-    flex: 1,
-    height: "230px",
-    borderRadius: "18px",
-    background: "#d4f8d4",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: green,
-    fontWeight: "700",
-    border: `3px dashed ${borderGreen}`,
-    fontSize: "17px",
-  };
-
-  const title = {
-    fontSize: "30px",
-    fontWeight: "700",
-    color: green,
-    marginBottom: "10px",
+  const container = {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "20px",
   };
 
   const mainTitle = {
-    ...title,
     textAlign: "center",
-    fontSize: "38px",
-    marginBottom: "40px",
+    fontSize: "40px",
+    color: green,
+    fontWeight: "700",
+    marginBottom: "60px",
   };
 
-  const subhead = {
-    fontSize: "18px",
-    fontWeight: "600",
-    marginTop: "14px",
-    color: "#466d1d",
+  const sectionTitle = {
+    textAlign: "center",
+    fontSize: "34px",
+    color: green,
+    fontWeight: "700",
+    margin: "100px 0 50px",
   };
 
-  // SLIDES DATA
-  const infraSlides = [
-    { title: "Our Infrastructure 🏫", desc: "15,000 Sq.ft campus, safe classrooms, CCTV, UPS backup and sensory-friendly spaces.", img: "Infrastructure" },
-    { title: "Computer Lab & AV Room 💻", desc: "Smart boards, projectors & multimedia learning tools.", img: "AV Room" },
-    { title: "Indoor Gym & Play Area 🤸‍♂️", desc: "Mini trampolines, balancing beams, sensory tools and more.", img: "Indoor Gym" },
-    { title: "Outdoor Gym & Play Area 🛝", desc: "Slides, swings and outdoor fitness equipment.", img: "Outdoor Play" },
-    { title: "Indoor Sports Area ⚽", desc: "Table Tennis, Cricket, Shuttle, Volleyball and more.", img: "Sports Area" },
-    { title: "Physical Activities 💪", desc: "Daily exercises to improve strength, flexibility and posture.", img: "Physical Training" },
-    { title: "Yoga Sessions 🧘‍♀️", desc: "Guided yoga to improve focus, calmness and balance.", img: "Yoga" },
-    { title: "Transport Services 🚐", desc: "3 Vans with escorts. One fitted with GPS + CCTV.", img: "Transport" }
-  ];
-
-  const [index, setIndex] = useState(0);
-  const [enlarged, setEnlarged] = useState(null);
-
-  const [hovered, setHovered] = useState(false); // ⭐ NEW FIX
-
-  useEffect(() => {
-    const timer = setInterval(() => nextSlide(), 4000);
-    return () => clearInterval(timer);
-  }, [index]);
-
-  const nextSlide = () => setIndex(i => (i + 1) % infraSlides.length);
-  const prevSlide = () => setIndex(i => (i - 1 + infraSlides.length) % infraSlides.length);
-
-  const prevIndex = (index - 1 + infraSlides.length) % infraSlides.length;
-  const nextIndex = (index + 1) % infraSlides.length;
-
-  // CAROUSEL STYLES
-  const carouselContainer = {
-    position: "relative",
-    width: "100%",
-    height: "320px",
+  const schoolRow = {
     display: "flex",
-    justifyContent: "center",
-    marginBottom: "70px",
-    marginTop: "10px",
+    gap: "30px",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
   };
 
-  const slideBase = {
-    width: "450px",
-    height: "260px",
-    borderRadius: "20px",
-    padding: "20px",
+  const grid = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", // Responsive Grid
+    gap: "30px",
+  };
+
+  const card = {
     background: yellowBg,
     border: `3px solid ${borderGreen}`,
-    boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
+    borderRadius: "22px",
+    padding: "26px",
+    boxShadow: "0 8px 22px rgba(0,0,0,0.08)",
     transition: "all 0.35s ease",
-    position: "absolute"
-  };
-
-  const leftSlide = {
-    ...slideBase,
-    transform: "translateX(-270px) scale(0.85)",
-    opacity: 0.4,
-    zIndex: 1,
-  };
-
-  const centerSlide = {
-    ...slideBase,
-    transform: "translateX(0) scale(1)",
-    opacity: 1,
-    zIndex: 3,
-  };
-
-  const rightSlide = {
-    ...slideBase,
-    transform: "translateX(270px) scale(0.85)",
-    opacity: 0.4,
-    zIndex: 1,
-  };
-
-  // ⭐ IMAGE ONLY HOVER ZOOM — PREMIUM
-  const imageBox = {
-    flex: 1,
-    height: "180px",
-    background: "#d4f8d4",
-    borderRadius: "14px",
-    border: `3px dashed ${borderGreen}`,
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontWeight: "700",
-    color: green,
-    transition: "all 0.4s ease",
+    flexDirection: "column",
   };
 
-  const imageHover = {
-    transform: "scale(1.5)",
-    boxShadow: "0 25px 45px rgba(0,0,0,0.35)",
-    zIndex: 50,
+  const imageBox = {
+    height: "200px",
+    borderRadius: "16px",
+    background: "#d4f8d4",
+    border: `3px dashed ${borderGreen}`,
+    marginBottom: "18px",
+    overflow: "hidden", // Ensures image stays inside corners
+    position: "relative",
   };
 
-  const textBox = { flex: 2 };
-
-  const arrowStyle = {
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)",
-    fontSize: "32px",
-    fontWeight: "900",
-    color: green,
-    cursor: "pointer",
-    background: "#fff",
-    padding: "10px 15px",
-    borderRadius: "50%",
-    border: `3px solid ${borderGreen}`,
-    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+  const imgStyle = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    transition: "transform 0.5s ease",
   };
+
+  // Data Objects
+  const facilities = [
+    {
+      title: "Computer Lab & AV Room 💻",
+      desc: "Smart boards and multimedia learning tools.",
+      image: imgComputer,
+    },
+    {
+      title: "Indoor Gym & Play Area 🤸‍♂️",
+      desc: "Sensory and motor skill development equipment.",
+      image: imgIndoorPlay,
+    },
+    {
+      title: "Outdoor Gym & Play Area 🛝",
+      desc: "Swings, slides and outdoor fitness equipment.",
+      image: imgOutdoor,
+    },
+    {
+      title: "Indoor Sports Area ⚽",
+      desc: "Table tennis, shuttle and group sports activities.",
+      image: imgIndoorSports,
+    },
+    {
+      title: "Physical Activities 💪",
+      desc: "Daily strength and flexibility training.",
+      image: imgPhysical,
+    },
+    {
+      title: "Yoga Sessions 🧘‍♀️",
+      desc: "Improves focus, calmness and balance.",
+      image: imgYoga,
+    },
+  ];
 
   return (
     <div style={outer}>
+      {/* ---------- GLOBAL ANIMATION STYLES ---------- */}
+      <style>
+        {`
+          .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+          }
 
-      {/* BACK BUTTON */}
-      <button
-        onClick={() => window.location.href = "/"}
-        style={{
-          position: "fixed",
-          top: "20px",
-          left: "20px",
-          padding: "10px 18px",
-          backgroundColor: green,
-          color: "white",
-          fontSize: "16px",
-          fontWeight: "600",
-          border: "none",
-          borderRadius: "10px",
-          cursor: "pointer",
-          zIndex: 9999
-        }}
-      >
-        ◀ Back
-      </button>
+          .reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+          }
 
-      <div style={page}>
+          .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+          }
 
-        <h1 style={mainTitle}>🌈 Programs & Services 🌟</h1>
+          /* Zoom effect on image hover */
+          .card-hover:hover .card-img {
+            transform: scale(1.1);
+          }
+        `}
+      </style>
 
-        {/* --------- SECTIONS START --------- */}
-        <div style={section}>
-          <div style={text}>
-            <h2 style={title}>Tom and Jerry Nursery School 🏫</h2>
-            <p>A joyful learning space for early childhood development.</p>
-            <h3 style={subhead}>Services Offered:</h3>
-            <ul>
-              <li>Play Group</li>
-              <li>Pre-Nursery</li>
-              <li>LKG</li>
-              <li>UKG</li>
-            </ul>
-            <p><strong>Age:</strong> 1 year 10 months – 6 years</p>
-          </div>
-          <div style={image}>Nursery Image</div>
+      <div style={container}>
+        {/* ---------- HEADER ---------- */}
+        <h1 style={mainTitle} className="reveal" ref={addRef}>
+          🏫 JDC SPARSHA Group of Schools
+        </h1>
+
+        {/* ---------- SCHOOLS ---------- */}
+        <div style={schoolRow}>
+          {[
+            {
+              title: "Tom & Jerry Nursery School",
+              img: img1, // Using your local import
+              desc: "Pre-primary education with activity-based learning.",
+              age: "1 yr 10 months – 6 yrs",
+              items: ["Play Group", "Pre-Nursery", "LKG & UKG"],
+            },
+            {
+              title: "Tom & Jerry Special School",
+              img: imgSpecial,
+              desc: "Therapeutic and educational support for special needs.",
+              age: "2 – 30 yrs",
+              items: ["Physiotherapy", "Speech Therapy", "Sensory Training"],
+            },
+            {
+              title: "Sparsha Academy (NIOS)",
+              img: imgAcademy,
+              desc: "Formal education for learning disabilities & slow learners.",
+              age: "6 yrs & above",
+              items: [
+                "Class 1–10 (NIOS)",
+                "Flexible Curriculum",
+                "Career Roadmap",
+              ],
+            },
+          ].map((s, i) => (
+            <div
+              key={i}
+              ref={addRef}
+              className="reveal card-hover"
+              style={{ ...card, flex: 1, minWidth: "300px" }}
+            >
+              {/* Image Rendering */}
+              <div style={imageBox}>
+                <img
+                  src={s.img}
+                  alt={s.title}
+                  style={imgStyle}
+                  className="card-img"
+                />
+              </div>
+
+              <h3 style={{ color: green, marginBottom: "10px" }}>{s.title}</h3>
+              <p style={{ marginBottom: "15px" }}>{s.desc}</p>
+              <ul
+                style={{
+                  paddingLeft: "20px",
+                  marginBottom: "15px",
+                  color: "#555",
+                }}
+              >
+                {s.items.map((it, idx) => (
+                  <li key={idx} style={{ marginBottom: "5px" }}>
+                    {it}
+                  </li>
+                ))}
+              </ul>
+              <p
+                style={{
+                  marginTop: "auto",
+                  paddingTop: "10px",
+                  borderTop: `1px dashed ${borderGreen}`,
+                }}
+              >
+                <b>Age:</b> {s.age}
+              </p>
+            </div>
+          ))}
         </div>
 
-        <div style={section}>
-          <div style={text}>
-            <h2 style={title}>Tom & Jerry Special School 🌟</h2>
-            <p>Support for children & adults with developmental delays.</p>
-            <h3 style={subhead}>Services:</h3>
-            <ul style={{ columns: 2 }}>
-              <li>Physiotherapy</li>
-              <li>Speech Therapy</li>
-              <li>Sensory Training</li>
-              <li>Cognitive Skills</li>
-              <li>Communication Skills</li>
-              <li>Emotional Skills</li>
-              <li>Adaptive Skills</li>
-            </ul>
-            <p><strong>Age:</strong> 2 – 30 years</p>
-          </div>
-          <div style={image}>Special School</div>
-        </div>
-        {/* --------- SECTIONS END --------- */}
-
-        <h2 style={{ fontSize: "34px", textAlign: "center", color: green, marginTop: "20px" }}>
-          🌟 Our School Facilities 🌟
+        {/* ---------- INFRASTRUCTURE ---------- */}
+        <h2 style={sectionTitle} className="reveal" ref={addRef}>
+          🏗 Our Infrastructure
         </h2>
 
-        {/* --------- CAROUSEL --------- */}
-        <div style={carouselContainer}>
-
-          {/* LEFT */}
-          <div style={leftSlide} onClick={() => setEnlarged(prevIndex)}>
-            <div style={textBox}>
-              <h3 style={{ color: green }}>{infraSlides[prevIndex].title}</h3>
-              <p>{infraSlides[prevIndex].desc}</p>
-            </div>
-            <div style={imageBox}>{infraSlides[prevIndex].img}</div>
-          </div>
-
-          {/* CENTER — IMAGE ZOOM ONLY */}
-          <div style={centerSlide} onClick={() => setEnlarged(index)}>
-            <div style={textBox}>
-              <h3 style={{ color: green }}>{infraSlides[index].title}</h3>
-              <p>{infraSlides[index].desc}</p>
-            </div>
-
+        <div style={grid}>
+          {facilities.map((f, i) => (
             <div
-              style={hovered ? { ...imageBox, ...imageHover } : imageBox}
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
+              key={i}
+              ref={addRef}
+              className="reveal card-hover"
+              style={card}
             >
-              {infraSlides[index].img}
+              <div style={imageBox}>
+                <img
+                  src={f.image}
+                  alt={f.title}
+                  style={imgStyle}
+                  className="card-img"
+                />
+              </div>
+              <h3 style={{ color: green, marginBottom: "10px" }}>{f.title}</h3>
+              <p>{f.desc}</p>
             </div>
-          </div>
-
-          {/* RIGHT */}
-          <div style={rightSlide} onClick={() => setEnlarged(nextIndex)}>
-            <div style={textBox}>
-              <h3 style={{ color: green }}>{infraSlides[nextIndex].title}</h3>
-              <p>{infraSlides[nextIndex].desc}</p>
-            </div>
-            <div style={imageBox}>{infraSlides[nextIndex].img}</div>
-          </div>
-
-          {/* ARROWS */}
-          <div style={{ ...arrowStyle, left: "-60px" }} onClick={prevSlide}>◀</div>
-          <div style={{ ...arrowStyle, right: "-60px" }} onClick={nextSlide}>▶</div>
-
+          ))}
         </div>
       </div>
     </div>

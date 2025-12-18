@@ -1,361 +1,491 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  ArrowLeft,
+  Bus,
+  Train,
+  Navigation as NavIcon,
+  Info,
+} from "lucide-react";
 
 export default function ContactUs() {
   const navigate = useNavigate();
 
-  /* TAB STATE */
-  const [tab, setTab] = React.useState("bus");
+  // --- THEME CONSTANTS ---
+  const green = "#1b7f3a";
+  const yellowBg = "#fffbea";
+  const borderGreen = "#8ac926";
+  const lightGreen = "#d4f8d4";
 
-  /* TAB STYLES */
-  const activeTab = {
-    padding: "10px 15px",
-    background: "#1b7f3a",
+  /* ---------- SCROLL ANIMATION ---------- */
+  const revealRefs = useRef([]);
+  revealRefs.current = []; // Reset on each render to prevent duplicates
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-active");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    revealRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const addRef = (el) => {
+    if (el && !revealRefs.current.includes(el)) {
+      revealRefs.current.push(el);
+    }
+  };
+
+  /* ---------- STATE ---------- */
+  const [tab, setTab] = useState("bus");
+
+  /* ---------- STYLES ---------- */
+  const outer = {
+    backgroundColor: "#ccf5d3",
+    minHeight: "100vh",
+    padding: "40px 0",
+    fontFamily: "'Poppins', sans-serif",
+    color: "#333",
+    overflowX: "hidden",
+  };
+
+  const container = {
+    maxWidth: "1100px",
+    margin: "0 auto",
+    padding: "0 20px",
+  };
+
+  const mainTitle = {
+    textAlign: "center",
+    fontSize: "clamp(30px, 5vw, 40px)",
+    color: green,
+    fontWeight: "700",
+    marginBottom: "10px",
+  };
+
+  const subTitle = {
+    textAlign: "center",
+    fontSize: "18px",
+    color: "#555",
+    marginBottom: "40px",
+  };
+
+  const card = {
+    background: yellowBg,
+    border: `3px solid ${borderGreen}`,
+    borderRadius: "22px",
+    padding: "30px",
+    boxShadow: "0 8px 22px rgba(0,0,0,0.08)",
+    transition: "all 0.35s ease",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    boxSizing: "border-box",
+  };
+
+  const gridSplit = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+    gap: "25px",
+    marginBottom: "25px",
+    alignItems: "stretch",
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "14px",
+    borderRadius: "12px",
+    border: `2px solid ${borderGreen}`,
+    outline: "none",
+    fontSize: "16px",
+    backgroundColor: "#fff",
+    fontFamily: "inherit",
+    boxSizing: "border-box",
+  };
+
+  const buttonStyle = {
+    padding: "14px",
+    backgroundColor: green,
     color: "white",
     border: "none",
-    borderRadius: "12px",
+    borderRadius: "30px",
+    fontSize: "18px",
+    marginTop: "auto", // Pushes button to bottom if content is short
     cursor: "pointer",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+    fontWeight: "600",
+    width: "100%",
+    transition: "0.2s",
+  };
+
+  const backBtnStyle = {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "8px",
+    backgroundColor: "#fff",
+    color: green,
+    padding: "10px 20px",
+    border: `2px solid ${green}`,
+    borderRadius: "30px",
+    fontSize: "16px",
+    fontWeight: "600",
+    cursor: "pointer",
+    marginBottom: "20px",
     transition: "0.3s",
   };
 
-  const inactiveTab = {
-    padding: "10px 15px",
-    background: "#dcedc8",
-    color: "#1b7f3a",
-    border: "2px solid #8ac926",
+  const tabBtnBase = {
+    flex: 1,
+    padding: "10px",
     borderRadius: "12px",
     cursor: "pointer",
+    fontWeight: "600",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px",
     transition: "0.3s",
+    fontSize: "14px",
+    minWidth: "100px",
+  };
+
+  const listItem = {
+    display: "flex",
+    gap: "12px",
+    marginBottom: "15px",
+    alignItems: "flex-start",
+    fontSize: "15px",
+    lineHeight: "1.5",
   };
 
   return (
-    <div
-      style={{
-        background: "#15933bb0",
-        minHeight: "100vh",
-        padding: "50px 20px",
-      }}
-    >
-      {/* Back Button */}
-      <button
-        onClick={() => navigate(-1)}
-        style={{
-          backgroundColor: "#f9f1139d",
-          color: "white",
-          padding: "12px 20px",
-          border: "none",
-          borderRadius: "30px",
-          fontSize: "16px",
-          cursor: "pointer",
-          marginBottom: "20px",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-          transition: "0.3s",
-        }}
-        onMouseOver={(e) => (e.target.style.backgroundColor = "#e1d90f")}
-        onMouseOut={(e) => (e.target.style.backgroundColor = "#f9f1139d")}
-      >
-        ← Back
-      </button>
+    <div style={outer}>
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+          .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
+          .reveal-active { opacity: 1; transform: translateY(0); }
+          .card-hover:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+          input:focus, textarea:focus { border-color: ${green} !important; box-shadow: 0 0 0 3px ${lightGreen}; }
+          .tab-content-anim { animation: fadeIn 0.4s ease; }
+          @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+          @media (max-width: 600px) {
+            .grid-stack { grid-template-columns: 1fr !important; }
+          }
+        `}
+      </style>
 
-      {/* Main Card */}
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          backgroundColor: "#fffbea",
-          padding: "40px",
-          borderRadius: "25px",
-          boxShadow: "0 6px 20px rgba(0,0,0,0.2)",
-          animation: "fadeSlide 0.8s ease",
-        }}
-      >
-        {/* Heading */}
-        <div style={{ textAlign: "center", marginBottom: "40px" }}>
-          <h1
-            style={{
-              color: "#1b7f3a",
-              fontSize: "48px",
-              fontWeight: "bold",
-              animation: "pop 0.6s ease",
-            }}
-          >
-            Contact Us
-          </h1>
-          <p style={{ color: "#333", fontSize: "18px" }}>
-            We're happy to help — reach out anytime!
-          </p>
+      <div style={container}>
+        <button
+          onClick={() => navigate(-1)}
+          style={backBtnStyle}
+          className="reveal"
+          ref={addRef}
+        >
+          <ArrowLeft size={18} /> Back
+        </button>
+
+        <div className="reveal" ref={addRef}>
+          <h1 style={mainTitle}>Contact Us</h1>
+          <p style={subTitle}>We're happy to help — reach out anytime!</p>
         </div>
 
-        {/* Contact Form + Info */}
-        <div
-          style={{
-            display: "flex",
-            gap: "30px",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-          }}
-        >
-          {/* FORM */}
-          <div
-            style={{
-              flex: "1",
-              minWidth: "300px",
-              background: "white",
-              padding: "25px",
-              borderRadius: "20px",
-              border: "3px solid #8ac926",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-              animation: "slideLeft 0.9s ease",
-            }}
-          >
-            <h2 style={{ color: "#1b7f3a", marginBottom: "20px" }}>
-              📬 Send Us a Message
+        {/* SECTION 1: FORM & INFO */}
+        <div style={gridSplit} className="grid-stack">
+          <div style={card} className="reveal card-hover" ref={addRef}>
+            <h2
+              style={{
+                color: green,
+                marginBottom: "20px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                fontSize: "22px",
+              }}
+            >
+              <Mail size={24} /> Send a Message
             </h2>
-
             <form
-              style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                flex: 1,
+              }}
             >
               <input type="text" placeholder="Your Name" style={inputStyle} />
               <input type="email" placeholder="Your Email" style={inputStyle} />
-              <input type="text" placeholder="Your Phone Number" style={inputStyle} />
+              <input
+                type="text"
+                placeholder="Phone Number"
+                style={inputStyle}
+              />
               <textarea
-                rows="5"
+                rows="4"
                 placeholder="Your Message"
-                style={textareaStyle}
+                style={{ ...inputStyle, resize: "none" }}
               ></textarea>
-
-              <button style={buttonStyle}>Send Message</button>
+              <button type="submit" style={buttonStyle}>
+                Send Message
+              </button>
             </form>
           </div>
 
-          {/* INFO */}
-          <div
-            style={{
-              flex: "1",
-              minWidth: "300px",
-              background: "white",
-              padding: "25px",
-              borderRadius: "20px",
-              border: "3px solid #8ac926",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-              animation: "slideRight 0.9s ease",
-            }}
-          >
-            <h2 style={{ color: "#1b7f3a", marginBottom: "20px" }}>
-              📍 Our Details
+          <div style={card} className="reveal card-hover" ref={addRef}>
+            <h2
+              style={{
+                color: green,
+                marginBottom: "20px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                fontSize: "22px",
+              }}
+            >
+              <MapPin size={24} /> Our Details
             </h2>
-
-            <p style={infoText}>
-              <b>Address:</b><br />
-              Tom And Jerry Nursery & Special School,<br />
-              Sri Vittalagiri Dhama, No.69 Kodipalya,<br />
-              Kengeri Hobli, Bengaluru, Karnataka 560060
-            </p>
-
-            <p style={infoText}>
-              <b>Phone:</b> 📞 99015 12779
-            </p>
-
-            {/* FIXED EMAIL BLOCK */}
-            <p style={infoText}>
-              <b>Email:</b>
-              <a
-                href="mailto:jdc.office@jdcsparsha.org"
+            <div style={{ flex: 1 }}>
+              <div style={listItem}>
+                <MapPin size={20} color={green} style={{ flexShrink: 0 }} />
+                <span>
+                  <b>Address:</b>
+                  <br />
+                  Tom And Jerry Nursery, No.69 Kodipalya, Kengeri Hobli,
+                  Bengaluru 560060
+                </span>
+              </div>
+              <div style={listItem}>
+                <Phone size={20} color={green} style={{ flexShrink: 0 }} />
+                <span>
+                  <b>Phone:</b>
+                  <br />
+                  +91 99015 12779
+                </span>
+              </div>
+              <div style={listItem}>
+                <Mail size={20} color={green} style={{ flexShrink: 0 }} />
+                <span>
+                  <b>Email:</b>
+                  <br />
+                  <a
+                    href="mailto:jdc.office@jdcsparsha.org"
+                    style={{ color: green, textDecoration: "none" }}
+                  >
+                    jdc.office@jdcsparsha.org
+                  </a>
+                </span>
+              </div>
+            </div>
+            <div
+              style={{
+                background: lightGreen,
+                padding: "15px",
+                borderRadius: "16px",
+                border: `2px dashed ${borderGreen}`,
+                marginTop: "10px",
+              }}
+            >
+              <h3
                 style={{
-                  color: "#1b7f3a",
-                  marginLeft: "8px",
-                  textDecoration: "underline",
+                  color: green,
+                  fontSize: "16px",
+                  marginBottom: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  margin: 0,
                 }}
               >
-                jdc.office@jdcsparsha.org
-              </a>
-            </p>
-
-            <h3 style={{ marginTop: "25px", color: "#1b7f3a" }}>⚠ Instructions</h3>
-            <ul style={{ lineHeight: "1.8", color: "#333" }}>
-              <li>Please park your vehicles outside.</li>
-              <li>Parents are not allowed inside the campus.</li>
-            </ul>
+                <Info size={18} /> Campus Rules
+              </h3>
+              <ul
+                style={{
+                  paddingLeft: "18px",
+                  margin: "8px 0 0 0",
+                  fontSize: "14px",
+                  color: "#444",
+                }}
+              >
+                <li>Please park vehicles outside.</li>
+                <li>Parents not allowed inside campus.</li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* MAP + SWITCHABLE MENU */}
-        <div
-          style={{
-            marginTop: "40px",
-            display: "flex",
-            gap: "20px",
-            flexWrap: "wrap",
-            animation: "fadeSlide 1.2s ease",
-          }}
-        >
-          {/* MAP */}
+        {/* SECTION 2: MAP & TRANSPORT */}
+        <div style={gridSplit} className="grid-stack">
           <div
-            style={{
-              flex: 1.5,
-              minWidth: "300px",
-              height: "350px",
-              borderRadius: "20px",
-              overflow: "hidden",
-              border: "3px solid #8ac926",
-              boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
-            }}
+            className="reveal card-hover"
+            ref={addRef}
+            style={{ ...card, padding: "12px", minHeight: "400px" }}
           >
             <iframe
               title="school-location"
               width="100%"
               height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
+              style={{ border: 0, borderRadius: "14px", flex: 1 }}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.3444760032943!2d77.4664323!3d12.8851456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f0000000001%3A0x0!2zMTLCsDUzJzA2LjUiTiA3N8KwMjcnNTkuMiJF!5e0!3m2!1sen!2sin!4v1630000000000!5m2!1sen!2sin"
               allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              src="https://maps.google.com/maps?ll=12.90217639475008,77.49049120048372&z=19&t=m&output=embed"
+              loading="lazy"
             ></iframe>
           </div>
 
-          {/* TABS SIDEBAR */}
-          <div
-            style={{
-              flex: 1,
-              minWidth: "260px",
-              background: "white",
-              padding: "20px",
-              borderRadius: "20px",
-              border: "3px solid #8ac926",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-            }}
-          >
-            {/* TAB BUTTONS */}
-            <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
-              <button onClick={() => setTab("bus")} style={tab === "bus" ? activeTab : inactiveTab}>
-                🚌 Bus
+          <div style={card} className="reveal card-hover" ref={addRef}>
+            <div
+              style={{
+                display: "flex",
+                gap: "8px",
+                marginBottom: "20px",
+                flexWrap: "wrap",
+              }}
+            >
+              <button
+                onClick={() => setTab("bus")}
+                style={
+                  tab === "bus"
+                    ? { ...tabBtnBase, background: green, color: "#fff" }
+                    : {
+                        ...tabBtnBase,
+                        color: green,
+                        border: `2px solid ${borderGreen}`,
+                      }
+                }
+              >
+                <Bus size={16} /> Bus
               </button>
-              <button onClick={() => setTab("metro")} style={tab === "metro" ? activeTab : inactiveTab}>
-                🚇 Metro
+              <button
+                onClick={() => setTab("metro")}
+                style={
+                  tab === "metro"
+                    ? { ...tabBtnBase, background: green, color: "#fff" }
+                    : {
+                        ...tabBtnBase,
+                        color: green,
+                        border: `2px solid ${borderGreen}`,
+                      }
+                }
+              >
+                <Train size={16} /> Metro
               </button>
-              <button onClick={() => setTab("dir")} style={tab === "dir" ? activeTab : inactiveTab}>
-                🧭 Directions
+              <button
+                onClick={() => setTab("dir")}
+                style={
+                  tab === "dir"
+                    ? { ...tabBtnBase, background: green, color: "#fff" }
+                    : {
+                        ...tabBtnBase,
+                        color: green,
+                        border: `2px solid ${borderGreen}`,
+                      }
+                }
+              >
+                <NavIcon size={16} /> Directions
               </button>
             </div>
 
-            {/* TAB CONTENT */}
-            <div style={{ fontSize: "16px", color: "#333", lineHeight: "1.6" }}>
+            <div className="tab-content-anim" style={{ flex: 1 }}>
               {tab === "bus" && (
-                <div style={{ animation: "fadeSlide 0.4s ease" }}>
-                  <h3 style={{ color: "#1b7f3a" }}>🚌 Bus Routes</h3>
-                  <ul>
-                    <li><b>Nearest Stop:</b> Kodipalya Village</li>
-                    <li>230 — Kengeri → Kodipalya</li>
-                    <li>241R — Kambipura Route</li>
-                    <li>241L — Kengeri Hobli</li>
-                    <li>241N — Kengeri → Kodipalya</li>
-                    <li>225D / 225E — Mysore Road</li>
-                  </ul>
-                </div>
-              )}
-
-              {tab === "metro" && (
-                <div style={{ animation: "fadeSlide 0.4s ease" }}>
-                  <h3 style={{ color: "#1b7f3a" }}>🚇 Nearest Metro Stations</h3>
-                  <ul>
-                    <li><b>Kengeri Metro Station</b> — 4 km</li>
-                    <li><b>Challaghatta Metro Station</b> — 5.5 km</li>
-                  </ul>
-                  <h4 style={{ color: "#1b7f3a" }}>How to Reach:</h4>
-                  <p>
-                    Exit Kengeri Metro → Take 241 bus or auto → Get down at Kodipalya → Walk 5–7 minutes.
+                <div>
+                  <h3 style={{ color: green, margin: "0 0 10px 0" }}>
+                    🚌 Bus Routes
+                  </h3>
+                  <p style={{ fontSize: "14px" }}>
+                    <b>Stop:</b> Kodipalya Village
                   </p>
+                  <ul
+                    style={{
+                      paddingLeft: "20px",
+                      fontSize: "14px",
+                      lineHeight: "1.8",
+                    }}
+                  >
+                    <li>
+                      <b>230</b> — Kengeri ↔ Kodipalya
+                    </li>
+                    <li>
+                      <b>241R / 241L</b> — Local Routes
+                    </li>
+                    <li>
+                      <b>225D</b> — Mysore Road Connection
+                    </li>
+                  </ul>
                 </div>
               )}
-
+              {tab === "metro" && (
+                <div>
+                  <h3 style={{ color: green, margin: "0 0 10px 0" }}>
+                    🚇 Metro Access
+                  </h3>
+                  <ul
+                    style={{
+                      paddingLeft: "20px",
+                      fontSize: "14px",
+                      lineHeight: "1.8",
+                    }}
+                  >
+                    <li>
+                      <b>Kengeri Metro</b> — 4 km
+                    </li>
+                    <li>
+                      <b>Challaghatta Metro</b> — 5.5 km
+                    </li>
+                  </ul>
+                  <div
+                    style={{
+                      background: lightGreen,
+                      padding: "12px",
+                      borderRadius: "12px",
+                      marginTop: "10px",
+                      fontSize: "13px",
+                    }}
+                  >
+                    Take 241 bus or auto from Kengeri Metro Station.
+                  </div>
+                </div>
+              )}
               {tab === "dir" && (
-                <div style={{ animation: "fadeSlide 0.4s ease" }}>
-                  <h3 style={{ color: "#1b7f3a" }}>🧭 Get Directions</h3>
-                  <p>Open in Google Maps:</p>
-
+                <div style={{ textAlign: "center", paddingTop: "20px" }}>
+                  <h3 style={{ color: green, marginBottom: "10px" }}>
+                    🧭 Navigate
+                  </h3>
+                  <p style={{ fontSize: "14px", marginBottom: "20px" }}>
+                    Launch maps for real-time navigation.
+                  </p>
                   <a
-                    href="https://www.google.com/maps/dir/?api=1&destination=Tom+And+Jerry+Nursery+%26+Special+School%2C+Kodipalya%2C+Bengaluru"
+                    href="https://maps.google.com"
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noreferrer"
                     style={{
                       display: "inline-block",
-                      marginTop: "10px",
-                      padding: "12px 20px",
-                      backgroundColor: "#1b7f3a",
+                      padding: "12px 25px",
+                      backgroundColor: green,
                       color: "white",
                       borderRadius: "30px",
                       textDecoration: "none",
-                      fontSize: "18px",
-                      boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
+                      fontWeight: "bold",
                     }}
                   >
-                    📍 Open Directions
+                    📍 Open Maps
                   </a>
                 </div>
               )}
             </div>
           </div>
         </div>
-
-        {/* ANIMATIONS */}
-        <style>
-          {`
-            @keyframes pop {
-              0% { transform: scale(0.8); opacity: 0; }
-              100% { transform: scale(1); opacity: 1; }
-            }
-            @keyframes fadeSlide {
-              0% { opacity: 0; transform: translateY(20px); }
-              100% { opacity: 1; transform: translateY(0); }
-            }
-            @keyframes slideLeft {
-              0% { opacity: 0; transform: translateX(-40px); }
-              100% { opacity: 1; transform: translateX(0); }
-            }
-            @keyframes slideRight {
-              0% { opacity: 0; transform: translateX(40px); }
-              100% { opacity: 1; transform: translateX(0); }
-            }
-          `}
-        </style>
       </div>
     </div>
   );
 }
-
-/* INPUT + BUTTON STYLES */
-const inputStyle = {
-  padding: "12px",
-  borderRadius: "10px",
-  border: "2px solid #8ac926",
-  outline: "none",
-  fontSize: "16px",
-};
-
-const textareaStyle = {
-  padding: "12px",
-  borderRadius: "10px",
-  border: "2px solid #8ac926",
-  outline: "none",
-  fontSize: "16px",
-  resize: "none",
-};
-
-const buttonStyle = {
-  padding: "14px",
-  backgroundColor: "#1b7f3a",
-  color: "white",
-  border: "none",
-  borderRadius: "30px",
-  fontSize: "18px",
-  marginTop: "10px",
-  cursor: "pointer",
-  transition: "0.3s",
-};
-
-const infoText = {
-  color: "#333",
-  fontSize: "18px",
-  lineHeight: "1.6",
-};

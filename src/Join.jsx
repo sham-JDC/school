@@ -1,6 +1,131 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const WhyJoinUs = () => {
+  // --- THEME CONSTANTS (From Template) ---
+  const green = "#1b7f3a";
+  const yellowBg = "#fffbea";
+  const borderGreen = "#8ac926";
+  const lightGreen = "#d4f8d4";
+
+  /* ---------- SCROLL ANIMATION (From Template) ---------- */
+  const revealRefs = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal-active");
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    revealRefs.current.forEach((el) => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  const addRef = (el) => {
+    if (el && !revealRefs.current.includes(el)) {
+      revealRefs.current.push(el);
+    }
+  };
+
+  /* ---------- STYLES (Consistent with Template) ---------- */
+
+  const outer = {
+    backgroundColor: "#ccf5d3",
+    minHeight: "100vh",
+    padding: "50px 0",
+    fontFamily: "'Poppins', sans-serif",
+    color: "#333",
+  };
+
+  const container = {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "20px",
+  };
+
+  const mainTitle = {
+    textAlign: "center",
+    fontSize: "40px",
+    color: green,
+    fontWeight: "700",
+    marginBottom: "20px",
+  };
+
+  const subTitle = {
+    textAlign: "center",
+    fontSize: "18px",
+    color: "#555",
+    maxWidth: "700px",
+    margin: "0 auto 60px",
+    lineHeight: "1.6",
+  };
+
+  const sectionTitle = {
+    textAlign: "center",
+    fontSize: "34px",
+    color: green,
+    fontWeight: "700",
+    margin: "80px 0 40px",
+  };
+
+  const galleryGrid = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+    gap: "30px",
+    marginBottom: "60px",
+  };
+
+  const card = {
+    background: yellowBg,
+    border: `3px solid ${borderGreen}`,
+    borderRadius: "22px",
+    padding: "26px",
+    boxShadow: "0 8px 22px rgba(0,0,0,0.08)",
+    transition: "all 0.35s ease",
+    height: "100%",
+  };
+
+  const imageFrame = {
+    borderRadius: "16px",
+    background: lightGreen,
+    border: `3px dashed ${borderGreen}`,
+    padding: "5px", // Small padding between dashed border and image
+    overflow: "hidden",
+    marginBottom: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "transform 0.35s ease",
+  };
+
+  const splitSection = {
+    display: "grid",
+    gridTemplateColumns: "1fr 1.2fr",
+    gap: "40px",
+    alignItems: "start",
+  };
+
+  const listCard = {
+    ...card,
+    display: "flex",
+    alignItems: "center",
+    gap: "20px",
+    padding: "20px",
+    marginBottom: "20px",
+    textDecoration: "none", // Remove underline for links
+    color: "inherit",
+    cursor: "pointer",
+  };
+
+  // Mobile responsiveness for grid
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 900;
+
   const FEATURES = [
     {
       title: "Friendly Atmosphere",
@@ -48,277 +173,221 @@ const WhyJoinUs = () => {
   ];
 
   return (
-    <>
-      <style>{`
-        .wj-page {
-          background: #f4fff6;
-          min-height: 100vh;
-          padding-bottom: 4rem;
-          font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
-        .wj-container {
-          max-width: 1100px;
-          margin: 0 auto;
-          padding: 4rem 1.5rem 2rem;
-        }
+    <div style={outer}>
+      {/* ---------- GLOBAL ANIMATION & FONT STYLES ---------- */}
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-        .wj-title-wrap {
-          text-align: center;
-          margin-bottom: 1rem;
-        }
-        .wj-main-title {
-          font-size: 2.4rem;
-          color: #14532d;
-        }
-        .wj-main-underline {
-          width: 90px;
-          height: 4px;
-          border-radius: 999px;
-          margin: 0.4rem auto 0;
-          background: #facc15;
-        }
-        .wj-hero-sub {
-          margin-top: 1.5rem;
-          font-size: 1.02rem;
-          color: #166534;
-        }
-
-        /* top image strip */
-        .wj-gallery-strip {
-          margin: 3rem 0 3.5rem;
-          display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 1.25rem;
-        }
-        .wj-frame {
-          position: relative;
-          overflow: hidden;
-          border-radius: 22px;
-          background: #ecfdf5;
-          box-shadow: 0 14px 32px rgba(16, 185, 129, 0.25);
-        }
-        .wj-frame-img {
-          width: 100%;
-          height: 210px;
-          object-fit: cover;
-          display: block;
-          transform-origin: center;
-          transform: scale(1.02) translateY(0);
-          transition: transform 400ms ease-out, filter 400ms ease-out;
-          filter: saturate(1.05);
-        }
-        .wj-frame::before {
-          content: "";
-          position: absolute;
-          inset: 12px;
-          border-radius: 18px;
-          border: 2px solid rgba(255, 255, 255, 0.7);
-          pointer-events: none;
-        }
-        .wj-frame:hover .wj-frame-img {
-          transform: scale(1.09) translateY(-6px);
-          filter: saturate(1.2) brightness(1.02);
-        }
-
-        /* Explore Our World layout */
-        .wj-section-header {
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-        .wj-section-title {
-          font-size: 1.8rem;
-          color: #14532d;
-          margin-bottom: 0.4rem;
-        }
-        .wj-section-sub {
-          max-width: 620px;
-          margin: 0 auto;
-          color: #166534;
-          font-size: 0.98rem;
-        }
-
-        .wj-explore {
-          display: grid;
-          grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
-          gap: 2rem;
-          align-items: stretch;
-        }
-
-        .wj-explore-left {
-          position: relative;
-          border-radius: 26px;
-          overflow: hidden;
-          background: radial-gradient(circle at top left, #bbf7d0 0, #dcfce7 45%, #ffffff 100%);
-          box-shadow: 0 20px 50px rgba(21, 128, 61, 0.25);
-          padding: 1.1rem;
-        }
-        .wj-explore-img-main {
-          width: 100%;
-          height: 260px;
-          object-fit: cover;
-          border-radius: 20px;
-          display: block;
-        }
-        .wj-explore-mini-row {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 0.75rem;
-          margin-top: 0.9rem;
-        }
-        .wj-explore-mini {
-          border-radius: 14px;
-          overflow: hidden;
-        }
-        .wj-explore-mini img {
-          width: 100%;
-          height: 80px;
-          object-fit: cover;
-          display: block;
-          transform: scale(1.02);
-          transition: transform 280ms ease-out, filter 280ms ease-out;
-        }
-        .wj-explore-mini:hover img {
-          transform: scale(1.07);
-          filter: saturate(1.2);
-        }
-
-        /* right side feature cards with images */
-        .wj-card-list {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.1rem;
-        }
-        .wj-card-link {
-          text-decoration: none;
-        }
-        .wj-card {
-          display: grid;
-          grid-template-columns: 105px minmax(0, 1fr);
-          gap: 1rem;
-          align-items: center;
-          padding: 0.9rem 1rem;
-          border-radius: 18px;
-          background: radial-gradient(circle at top left, #bbf7d0 0, #f0fdf4 45%, #ffffff 100%);
-          box-shadow: 0 12px 26px rgba(21, 128, 61, 0.18);
-          cursor: pointer;
-          transform: translateY(0) scale(1);
-          transition: transform 220ms ease-out, box-shadow 220ms ease-out, background 220ms ease-out;
-        }
-        .wj-card:hover {
-          transform: translateY(-4px) scale(1.01);
-          box-shadow: 0 18px 40px rgba(22, 163, 74, 0.3);
-          background: radial-gradient(circle at top left, #bbf7d0 0, #ecfdf5 45%, #ffffff 100%);
-        }
-        .wj-card-thumb-wrap {
-          border-radius: 15px;
-          overflow: hidden;
-        }
-        .wj-card-thumb {
-          width: 100%;
-          height: 90px;
-          object-fit: cover;
-          display: block;
-          transform: scale(1.03);
-          transition: transform 260ms ease-out, filter 260ms ease-out;
-        }
-        .wj-card:hover .wj-card-thumb {
-          transform: scale(1.08);
-          filter: saturate(1.15);
-        }
-        .wj-card-title {
-          font-size: 1rem;
-          font-weight: 600;
-          margin-bottom: 0.3rem;
-          color: #14532d;
-        }
-        .wj-card-text {
-          font-size: 0.9rem;
-          color: #166534;
-          line-height: 1.6;
-        }
-
-        @media (max-width: 900px) {
-          .wj-gallery-strip {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+          .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
           }
-          .wj-explore {
-            grid-template-columns: minmax(0, 1fr);
-          }
-        }
-        @media (max-width: 640px) {
-          .wj-gallery-strip {
-            grid-template-columns: minmax(0, 1fr);
-          }
-        }
-      `}</style>
 
-      <div className="wj-page">
-        <div className="wj-container">
-          {/* Top title like your main page */}
-          <div className="wj-title-wrap">
-            <h1 className="wj-main-title">Why Join Us</h1>
-            <div className="wj-main-underline" />
-            <p className="wj-hero-sub">
-              Let your children explore the joy of learning with us in a warm, friendly and inspiring campus.
-            </p>
+          .reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+          }
+          
+          /* Only scale image on hover */
+          .card-hover:hover .img-zoom img {
+            transform: scale(1.1);
+          }
+
+          /* Responsive Tweaks */
+          @media (max-width: 900px) {
+            .split-container {
+              grid-template-columns: 1fr !important;
+            }
+            .list-card-item {
+              flex-direction: column;
+              text-align: center;
+            }
+          }
+        `}
+      </style>
+
+      <div style={container}>
+        {/* ---------- HEADER ---------- */}
+        <header className="reveal" ref={addRef}>
+          <h1 style={mainTitle}>Why Join Us</h1>
+          <p style={subTitle}>
+            Let your children explore the joy of learning with us in a warm,
+            friendly and inspiring campus environment tailored for growth.
+          </p>
+        </header>
+
+        {/* ---------- TOP GALLERY STRIP ---------- */}
+        <div style={galleryGrid}>
+          {GALLERY.map((src, i) => (
+            <div
+              key={i}
+              ref={addRef}
+              className="reveal card-hover"
+              style={{
+                ...imageFrame,
+                marginBottom: 0,
+                height: "220px",
+                background: "#fff",
+              }}
+            >
+              <div
+                className="img-zoom"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                  borderRadius: "10px",
+                }}
+              >
+                <img
+                  src={src}
+                  alt={`Gallery ${i}`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    transition: "transform 0.5s ease",
+                  }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ---------- EXPLORE SECTION ---------- */}
+        <h2 style={sectionTitle} className="reveal" ref={addRef}>
+          Explore Our World
+        </h2>
+
+        <p
+          style={{ ...subTitle, marginBottom: "50px" }}
+          className="reveal"
+          ref={addRef}
+        >
+          Carefully designed programmes, activities and support services help
+          every child grow with confidence.
+        </p>
+
+        <div
+          style={
+            isMobile
+              ? { ...splitSection, gridTemplateColumns: "1fr" }
+              : splitSection
+          }
+          className="split-container"
+        >
+          {/* LEFT: IMAGE COLLAGE CARD */}
+          <div style={card} className="reveal card-hover" ref={addRef}>
+            <div style={{ ...imageFrame, height: "300px" }}>
+              <img
+                src="https://images.pexels.com/photos/8612969/pexels-photo-8612969.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Main"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "12px",
+                }}
+              />
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: "10px",
+              }}
+            >
+              {GALLERY.slice(0, 3).map((src, i) => (
+                <div
+                  key={i}
+                  style={{
+                    borderRadius: "12px",
+                    overflow: "hidden",
+                    height: "80px",
+                    border: `2px solid ${borderGreen}`,
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt="mini"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Image frames row */}
-          <section className="wj-gallery-strip">
-            {GALLERY.map((src, i) => (
-              <div key={i} className="wj-frame">
-                <img className="wj-frame-img" src={src} alt={`Campus life ${i + 1}`} />
-              </div>
-            ))}
-          </section>
-
-          {/* Explore Our World section */}
-          <section>
-            <div className="wj-section-header">
-              <h2 className="wj-section-title">Explore Our World</h2>
-              <p className="wj-section-sub">
-                Carefully designed programmes, activities and support services help every child grow with confidence.
-              </p>
-            </div>
-
-            <div className="wj-explore">
-              {/* left images block */}
-              <div className="wj-explore-left">
-                <img
-                  className="wj-explore-img-main"
-                  src="https://images.pexels.com/photos/8612969/pexels-photo-8612969.jpeg?auto=compress&cs=tinysrgb&w=800"
-                  alt="Children enjoying learning"
-                />
-                <div className="wj-explore-mini-row">
-                  {GALLERY.slice(0, 3).map((src, i) => (
-                    <div key={i} className="wj-explore-mini">
-                      <img src={src} alt={`Explore detail ${i + 1}`} />
-                    </div>
-                  ))}
+          {/* RIGHT: FEATURE LIST */}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {FEATURES.map((item, index) => (
+              <a
+                key={index}
+                href={item.href}
+                className="reveal card-hover list-card-item"
+                ref={addRef}
+                style={listCard}
+              >
+                {/* Thumbnail */}
+                <div
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "16px",
+                    overflow: "hidden",
+                    flexShrink: 0,
+                    border: `2px solid ${borderGreen}`,
+                  }}
+                >
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
                 </div>
-              </div>
 
-              {/* right cards */}
-              <div className="wj-card-list">
-                {FEATURES.map((item) => (
-                  <a key={item.title} href={item.href} className="wj-card-link">
-                    <article className="wj-card">
-                      <div className="wj-card-thumb-wrap">
-                        <img className="wj-card-thumb" src={item.img} alt={item.title} />
-                      </div>
-                      <div>
-                        <h3 className="wj-card-title">{item.title}</h3>
-                        <p className="wj-card-text">{item.text}</p>
-                      </div>
-                    </article>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </section>
+                {/* Content */}
+                <div>
+                  <h3
+                    style={{
+                      color: green,
+                      margin: "0 0 8px 0",
+                      fontSize: "20px",
+                    }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: "15px",
+                      color: "#555",
+                      lineHeight: "1.5",
+                    }}
+                  >
+                    {item.text}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
