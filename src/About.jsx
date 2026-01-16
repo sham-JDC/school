@@ -99,6 +99,15 @@ const AboutUsSection = () => {
     boxSizing: "border-box",
   };
 
+  // Center alignment specifically for Trustee cards
+  const centerCard = {
+    ...card,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+  };
+
   const imageFrame = {
     borderRadius: "16px",
     background: lightGreen,
@@ -109,6 +118,18 @@ const AboutUsSection = () => {
     alignItems: "center",
     justifyContent: "center",
     transition: "transform 0.35s ease",
+  };
+
+  // --- NEW CIRCULAR FRAME STYLE ---
+  const circularFrame = {
+    width: "200px",
+    height: "200px",
+    borderRadius: "50%",
+    border: `4px solid ${green}`,
+    overflow: "hidden",
+    marginBottom: "20px",
+    background: lightGreen,
+    flexShrink: 0, // Prevents squashing
   };
 
   const highlightBox = {
@@ -152,21 +173,21 @@ const AboutUsSection = () => {
     {
       name: "A. Shakila Banu",
       role: "Founder & Managing Trustee",
-      image: img2, // Assigned from your list
+      image: img2,
       description:
         "A passionate and dedicated teacher with more than 40 years of experience in educating children. She is the Principal and Head for all our Schools.",
     },
     {
       name: "R. Shanmuga Prasad",
       role: "Trustee",
-      image: img1, // Assigned from your list
+      image: img1,
       description:
         "Diversified industrial experience of well over 37 years in senior management positions. He is the Head of Finance and Administration.",
     },
     {
       name: "Dr. Shamanth Ph.D",
       role: "Trustee",
-      image: "./assets/shan2.png", // Assigned from your list
+      image: "./assets/shan2.png",
       description:
         "He foresees technological upgrades and IT services enablement in all school operations, implementing modern systems as necessary.",
     },
@@ -193,7 +214,14 @@ const AboutUsSection = () => {
           .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s ease-out; }
           .reveal-active { opacity: 1; transform: translateY(0); }
           .card-hover:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-          .img-zoom { transition: transform 0.5s ease; width: 100%; height: 100%; object-fit: cover; }
+          
+          /* Ensures images cover the area without stretching */
+          .img-zoom { 
+            transition: transform 0.5s ease; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+          }
           .card-hover:hover .img-zoom { transform: scale(1.05); }
           p { line-height: 1.7; margin-bottom: 15px; color: #444; }
         `}
@@ -204,7 +232,7 @@ const AboutUsSection = () => {
           About Us
         </h1>
 
-        {/* ---------- HERO IMAGES (UPDATED PATHS) ---------- */}
+        {/* ---------- HERO IMAGES ---------- */}
         <div style={grid3}>
           {[img3, img4, img5].map((src, i) => (
             <div
@@ -259,7 +287,7 @@ const AboutUsSection = () => {
           </div>
         </div>
 
-        {/* ---------- TRUSTEES (UPDATED WITH PHOTOS) ---------- */}
+        {/* ---------- TRUSTEES (UPDATED CIRCULAR IMAGES) ---------- */}
         <h2 style={sectionTitle} className="reveal" ref={addRef}>
           <Users size={34} color={green} /> Board of Trustees
         </h2>
@@ -270,23 +298,21 @@ const AboutUsSection = () => {
               key={index}
               ref={addRef}
               className="reveal card-hover"
-              style={card}
+              style={centerCard} // Used the centered card style
             >
-              <div
-                style={{ ...imageFrame, height: "220px", borderStyle: "solid" }}
-              >
+              <div style={circularFrame}>
                 <img
                   src={trustee.image}
                   alt={trustee.name}
                   className="img-zoom"
-                  style={{ objectPosition: "top" }}
+                  // objectPosition "top" prevents heads from being cut off
+                  style={{ objectPosition: "top center" }}
                 />
               </div>
               <h3
                 style={{
                   color: green,
                   marginBottom: "5px",
-                  textAlign: "center",
                 }}
               >
                 {trustee.name}
@@ -297,15 +323,12 @@ const AboutUsSection = () => {
                   fontSize: "13px",
                   textTransform: "uppercase",
                   marginBottom: "15px",
-                  textAlign: "center",
                   letterSpacing: "1px",
                 }}
               >
                 {trustee.role}
               </h4>
-              <p style={{ fontSize: "14px", textAlign: "center" }}>
-                {trustee.description}
-              </p>
+              <p style={{ fontSize: "14px" }}>{trustee.description}</p>
             </div>
           ))}
         </div>

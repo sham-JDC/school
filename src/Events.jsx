@@ -1,4 +1,16 @@
 import React from "react";
+// Import local assets 1-11
+import img1 from "./assets/1.jpg";
+import img2 from "./assets/1.jpg";
+import img3 from "./assets/1.jpg";
+import img4 from "./assets/1.jpg";
+import img5 from "./assets/1.jpg";
+import img6 from "./assets/1.jpg";
+import img7 from "./assets/1.jpg";
+import img8 from "./assets/1.jpg";
+import img9 from "./assets/1.jpg";
+import img10 from "./assets/1.jpg";
+import img11 from "./assets/1.jpg";
 
 export default function Events() {
   return (
@@ -28,7 +40,7 @@ export default function Events() {
 
         .events-title {
           font-size: 3em;
-          color: #2d5016;
+          color: #1b7f3a;
           letter-spacing: 2px;
           text-transform: uppercase;
         }
@@ -46,7 +58,7 @@ export default function Events() {
         .highlight-line {
           width: 100px;
           height: 4px;
-          background: linear-gradient(135deg, #ffeb3b, #cddc39);
+          background: linear-gradient(135deg, #8ac926, #1b7f3a);
           margin: 20px auto 0;
           border-radius: 2px;
         }
@@ -73,7 +85,7 @@ export default function Events() {
           gap: 20px;
           align-items: center;
           box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-          border-left: 6px solid #cddc39;
+          border-left: 6px solid #8ac926;
           transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
@@ -85,8 +97,8 @@ export default function Events() {
         .event-date-badge {
           min-width: 80px;
           text-align: center;
-          background: #2d5016;
-          color: #ffeb3b;
+          background: #1b7f3a;
+          color: #fff;
           border-radius: 10px;
           padding: 8px 10px;
           font-size: 0.8em;
@@ -97,7 +109,7 @@ export default function Events() {
         .event-name {
           font-size: 1.2em;
           font-weight: 600;
-          color: #2d5016;
+          color: #0f4c23;
           margin-bottom: 4px;
         }
 
@@ -128,7 +140,6 @@ export default function Events() {
           color: #777;
         }
 
-        /* Right column – small gallery block */
         .events-gallery {
           background: #ffffff;
           border-radius: 12px;
@@ -140,7 +151,7 @@ export default function Events() {
         .gallery-title {
           font-size: 1.3em;
           font-weight: 600;
-          color: #2d5016;
+          color: #1b7f3a;
           margin-bottom: 12px;
         }
 
@@ -196,10 +207,10 @@ export default function Events() {
           <h1 className="events-title">Events</h1>
           <div className="highlight-line" />
           <p className="events-subtitle">
-            For our children, every year is packed with enjoyment, festivities,
-            education and exposure. From national festivals to cultural
-            celebrations and sports, each event is an opportunity to learn,
-            participate, and shine.
+            Ever since Mrs. A. Shakila Banu established our foundation in 1990,
+            every year has been packed with enjoyment, education, and exposure.
+            From cultural celebrations to sports, each event is an opportunity
+            for our students to learn, participate, and shine.
           </p>
         </header>
 
@@ -216,14 +227,14 @@ export default function Events() {
               <div>
                 <div className="event-name">Independence Day Celebration</div>
                 <p className="event-description">
-                  The school celebrated Independence Day with patriotic fervour,
-                  marking the start of a vibrant series of celebrations for the
-                  year.
+                  Our students celebrate Independence Day with patriotic
+                  fervour, marking the start of a vibrant series of annual
+                  celebrations.
                 </p>
                 <div className="events-year-tag">Every Year</div>
               </div>
               <div className="event-thumb">
-                <img src="independence.jpg" alt="Independence Day" />
+                <img src={img1} alt="Independence Day" />
               </div>
             </div>
 
@@ -237,13 +248,13 @@ export default function Events() {
               <div>
                 <div className="event-name">Ganesha Chaturthi Celebration</div>
                 <p className="event-description">
-                  Children celebrate Lord Ganesha with devotion, decorations,
-                  songs and activities that build cultural awareness.
+                  Children celebrate with activities that build cultural
+                  awareness and instill good human values.
                 </p>
                 <div className="events-year-tag">Every Year</div>
               </div>
               <div className="event-thumb">
-                <img src="ganesha.jpg" alt="Ganesha Chaturthi" />
+                <img src={img2} alt="Ganesha Chaturthi" />
               </div>
             </div>
 
@@ -259,13 +270,13 @@ export default function Events() {
                   Krishna Janmashtami Celebration
                 </div>
                 <p className="event-description">
-                  Students dress as Krishna and Radha, enjoy bhajans and
-                  performances, and learn values through stories.
+                  Students learn values through stories and cultural
+                  performances, fostering a friendly and inspiring atmosphere.
                 </p>
                 <div className="events-year-tag">Every Year</div>
               </div>
               <div className="event-thumb">
-                <img src="krishna.jpg" alt="Krishna Janmashtami" />
+                <img src={img3} alt="Krishna Janmashtami" />
               </div>
             </div>
 
@@ -279,13 +290,13 @@ export default function Events() {
               <div>
                 <div className="event-name">Deepawali Celebration</div>
                 <p className="event-description">
-                  The festival of lights is marked with diyas, rangoli, songs,
-                  and joy, creating a warm and inclusive atmosphere.
+                  The festival of lights is marked with joy and inclusion,
+                  helping all children gain knowledge of our heritage.
                 </p>
                 <div className="events-year-tag">Every Year</div>
               </div>
               <div className="event-thumb">
-                <img src="deepawali.jpg" alt="Deepawali" />
+                <img src={img4} alt="Deepawali" />
               </div>
             </div>
 
@@ -299,13 +310,13 @@ export default function Events() {
               <div>
                 <div className="event-name">International Yoga Day</div>
                 <p className="event-description">
-                  Students participate in simple guided yoga practices, learning
-                  mindfulness, balance, and body awareness.
+                  Guided yoga practice helps children achieve balance and
+                  mindfulness, a core part of our holistic development mission.
                 </p>
                 <div className="events-year-tag">Every Year</div>
               </div>
               <div className="event-thumb">
-                <img src="yoga.jpg" alt="Yoga Day" />
+                <img src={img5} alt="Yoga Day" />
               </div>
             </div>
 
@@ -319,13 +330,13 @@ export default function Events() {
               <div>
                 <div className="event-name">Christmas Celebration</div>
                 <p className="event-description">
-                  A joyful celebration with carols, decorations and
-                  performances, spreading cheer and togetherness.
+                  Spreading cheer and togetherness through carols and
+                  performances in a cordial and friendly campus.
                 </p>
                 <div className="events-year-tag">Every Year</div>
               </div>
               <div className="event-thumb">
-                <img src="christmas.jpg" alt="Christmas" />
+                <img src={img6} alt="Christmas" />
               </div>
             </div>
 
@@ -339,13 +350,13 @@ export default function Events() {
               <div>
                 <div className="event-name">New Year Celebration</div>
                 <p className="event-description">
-                  Welcoming the New Year with hope, gratitude, and fun
-                  activities planned for the students.
+                  Welcoming the New Year with hope and gratitude as we continue
+                  our roadmap for education.
                 </p>
                 <div className="events-year-tag">Every Year</div>
               </div>
               <div className="event-thumb">
-                <img src="newyear.jpg" alt="New Year" />
+                <img src={img7} alt="New Year" />
               </div>
             </div>
 
@@ -359,13 +370,13 @@ export default function Events() {
               <div>
                 <div className="event-name">Sankranthi Celebration</div>
                 <p className="event-description">
-                  Students enjoy traditional activities, decorations, and
-                  cultural programs related to the harvest festival.
+                  A traditional harvest festival celebration that inspires
+                  children to appreciate our cultural roots.
                 </p>
                 <div className="events-year-tag">Every Year</div>
               </div>
               <div className="event-thumb">
-                <img src="sankranthi.jpg" alt="Sankranthi" />
+                <img src={img8} alt="Sankranthi" />
               </div>
             </div>
 
@@ -379,14 +390,14 @@ export default function Events() {
               <div>
                 <div className="event-name">Kreeda Chetana – 2024</div>
                 <p className="event-description">
-                  Rotary Bangalore Vijayanagar organised “Kreeda Chetana‑24”. 37
-                  students of our Special School participated and won many
-                  prizes.
+                  37 students of our Special School participated in "Kreeda
+                  Chetana-24" and won many prizes, showcasing their remarkable
+                  improvement.
                 </p>
                 <div className="events-year-tag">Special Sports Event</div>
               </div>
               <div className="event-thumb">
-                <img src="kreeda.jpg" alt="Kreeda Chetana" />
+                <img src={img9} alt="Kreeda Chetana" />
               </div>
             </div>
 
@@ -400,13 +411,13 @@ export default function Events() {
               <div>
                 <div className="event-name">28th Annual Sports Meet</div>
                 <p className="event-description">
-                  A day filled with track and field events, team games and
-                  celebrations of every child’s effort and progress.
+                  A day where every child is inspired to reach their full
+                  potential through track and field events.
                 </p>
                 <div className="events-year-tag">Annual Highlight</div>
               </div>
               <div className="event-thumb">
-                <img src="sports.jpg" alt="Annual Sports Meet" />
+                <img src={img10} alt="Annual Sports Meet" />
               </div>
             </div>
 
@@ -420,36 +431,35 @@ export default function Events() {
               <div>
                 <div className="event-name">Children’s Carnival</div>
                 <p className="event-description">
-                  A colourful carnival with games, food stalls, music, and
-                  performances – a day dedicated entirely to joy.
+                  A day dedicated to joy and confidence, features music,
+                  performances and games for all our students.
                 </p>
                 <div className="events-year-tag">Annual Celebration</div>
               </div>
               <div className="event-thumb">
-                <img src="carnival.jpg" alt="Children Carnival" />
+                <img src={img11} alt="Children Carnival" />
               </div>
             </div>
           </div>
 
-          {/* RIGHT: SMALL PHOTO GALLERY BLOCK */}
+          {/* RIGHT: PHOTO GALLERY BLOCK */}
           <aside className="events-gallery">
             <h2 className="gallery-title">Events Highlights</h2>
             <p className="gallery-note">
-              A glimpse of the smiles, colours, and moments from our
-              celebrations.
+              A glimpse of the smiles and moments from our journey.
             </p>
             <div className="gallery-grid">
               <div className="gallery-item">
-                <img src="independence.jpg" alt="Independence" />
+                <img src={img1} alt="Independence Highlight" />
               </div>
               <div className="gallery-item">
-                <img src="ganesha.jpg" alt="Ganesha" />
+                <img src={img2} alt="Ganesha Highlight" />
               </div>
               <div className="gallery-item">
-                <img src="sports.jpg" alt="Sports Day" />
+                <img src={img10} alt="Sports Highlight" />
               </div>
               <div className="gallery-item">
-                <img src="carnival.jpg" alt="Carnival" />
+                <img src={img11} alt="Carnival Highlight" />
               </div>
             </div>
           </aside>

@@ -1,13 +1,24 @@
 import React, { useEffect, useRef } from "react";
+// Import local assets 1-10
+import img1 from "./assets/1.jpg";
+import img2 from "./assets/1.jpg";
+import img3 from "./assets/1.jpg";
+import img4 from "./assets/1.jpg";
+import img5 from "./assets/1.jpg";
+import img6 from "./assets/1.jpg";
+import img7 from "./assets/1.jpg";
+import img8 from "./assets/1.jpg";
+import img9 from "./assets/1.jpg";
+import img10 from "./assets/1.jpg";
 
 const WhyJoinUs = () => {
-  // --- THEME CONSTANTS (From Template) ---
+  // --- THEME CONSTANTS ---
   const green = "#1b7f3a";
   const yellowBg = "#fffbea";
   const borderGreen = "#8ac926";
   const lightGreen = "#d4f8d4";
 
-  /* ---------- SCROLL ANIMATION (From Template) ---------- */
+  /* ---------- SCROLL ANIMATION ---------- */
   const revealRefs = useRef([]);
 
   useEffect(() => {
@@ -23,7 +34,6 @@ const WhyJoinUs = () => {
     );
 
     revealRefs.current.forEach((el) => el && observer.observe(el));
-
     return () => observer.disconnect();
   }, []);
 
@@ -33,8 +43,7 @@ const WhyJoinUs = () => {
     }
   };
 
-  /* ---------- STYLES (Consistent with Template) ---------- */
-
+  /* ---------- STYLES ---------- */
   const outer = {
     backgroundColor: "#ccf5d3",
     minHeight: "100vh",
@@ -61,7 +70,7 @@ const WhyJoinUs = () => {
     textAlign: "center",
     fontSize: "18px",
     color: "#555",
-    maxWidth: "700px",
+    maxWidth: "800px",
     margin: "0 auto 60px",
     lineHeight: "1.6",
   };
@@ -81,134 +90,96 @@ const WhyJoinUs = () => {
     marginBottom: "60px",
   };
 
-  const card = {
-    background: yellowBg,
-    border: `3px solid ${borderGreen}`,
-    borderRadius: "22px",
-    padding: "26px",
-    boxShadow: "0 8px 22px rgba(0,0,0,0.08)",
-    transition: "all 0.35s ease",
-    height: "100%",
-  };
-
   const imageFrame = {
     borderRadius: "16px",
-    background: lightGreen,
+    background: "#fff",
     border: `3px dashed ${borderGreen}`,
-    padding: "5px", // Small padding between dashed border and image
+    padding: "5px",
     overflow: "hidden",
-    marginBottom: "18px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     transition: "transform 0.35s ease",
   };
 
-  const splitSection = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1.2fr",
-    gap: "40px",
-    alignItems: "start",
+  const featureContainer = {
+    maxWidth: "850px", // Restrict width to keep list centered and readable
+    margin: "0 auto",
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
   };
 
   const listCard = {
-    ...card,
+    background: yellowBg,
+    border: `3px solid ${borderGreen}`,
+    borderRadius: "22px",
+    padding: "20px",
+    boxShadow: "0 8px 22px rgba(0,0,0,0.08)",
+    transition: "all 0.35s ease",
     display: "flex",
     alignItems: "center",
-    gap: "20px",
-    padding: "20px",
-    marginBottom: "20px",
-    textDecoration: "none", // Remove underline for links
+    gap: "25px",
+    textDecoration: "none",
     color: "inherit",
     cursor: "pointer",
   };
 
-  // Mobile responsiveness for grid
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 900;
-
   const FEATURES = [
     {
       title: "Friendly Atmosphere",
-      text: "Personalised care with lots of love and affection in a cordial, friendly environment.",
-      href: "/about",
-      img: "https://images.pexels.com/photos/8422206/pexels-photo-8422206.jpeg?auto=compress&cs=tinysrgb&w=400",
+      text: "Personalised care, love, and affection provided in a cordial environment since our inception in 1990.",
+      href: "/aboutus",
+      img: img5,
     },
     {
-      title: "Targeted Learning",
-      text: "Individual learning programmes for the physical, mental and social development of each child.",
-      href: "/programs",
-      img: "https://images.pexels.com/photos/8617981/pexels-photo-8617981.jpeg?auto=compress&cs=tinysrgb&w=400",
+      title: "Holistic Development",
+      text: "Our mission is to help all children reach their full potential in all aspects of knowledge and values.",
+      href: "/prog",
+      img: img6,
     },
     {
-      title: "Sports & Physical Training",
-      text: "Basic sports and fitness training using our indoor and outdoor play areas.",
-      href: "/sports",
-      img: "https://images.pexels.com/photos/8612970/pexels-photo-8612970.jpeg?auto=compress&cs=tinysrgb&w=400",
+      title: "Sports & Fitness",
+      text: "Engaging physical training using our dedicated play areas to build strength and coordination.",
+      href: "/life",
+      img: img7,
     },
     {
-      title: "Bhajan, Prayer & Yoga",
-      text: "Temple visits, bhajans and yoga sessions conducted by visiting professionals.",
-      href: "/activities",
-      img: "https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400",
+      title: "Spirituality & Yoga",
+      text: "Visiting professionals lead yoga and mindfulness sessions to instill balance and confidence.",
+      href: "/life",
+      img: img8,
     },
     {
-      title: "Art, Music & Drawing",
-      text: "Traditional singing and creative drawing sessions that build confidence.",
-      href: "/arts",
-      img: "https://images.pexels.com/photos/8618065/pexels-photo-8618065.jpeg?auto=compress&cs=tinysrgb&w=400",
+      title: "Creative Arts",
+      text: "Instilling human values through music, drawing, and traditional singing sessions.",
+      href: "/life",
+      img: img9,
     },
     {
-      title: "Field Trips & Therapy",
-      text: "Educational outings and after‑school therapy to support every learner.",
-      href: "/therapy",
-      img: "https://images.pexels.com/photos/8618003/pexels-photo-8618003.jpeg?auto=compress&cs=tinysrgb&w=400",
+      title: "Guided Excursions",
+      text: "Educational field trips that expand worldviews and support social development.",
+      href: "/life",
+      img: img10,
     },
   ];
 
-  const GALLERY = [
-    "https://images.pexels.com/photos/8612922/pexels-photo-8612922.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/8422243/pexels-photo-8422243.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/8422158/pexels-photo-8422158.jpeg?auto=compress&cs=tinysrgb&w=600",
-    "https://images.pexels.com/photos/8612961/pexels-photo-8612961.jpeg?auto=compress&cs=tinysrgb&w=600",
-  ];
+  const GALLERY = [img1, img2, img3, img4];
 
   return (
     <div style={outer}>
-      {/* ---------- GLOBAL ANIMATION & FONT STYLES ---------- */}
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+          .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+          .reveal-active { opacity: 1; transform: translateY(0); }
+          .card-hover:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
+          .img-zoom img { transition: transform 0.5s ease; }
+          .card-hover:hover .img-zoom img { transform: scale(1.1); }
 
-          .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-          }
-
-          .reveal-active {
-            opacity: 1;
-            transform: translateY(0);
-          }
-
-          .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-          }
-          
-          /* Only scale image on hover */
-          .card-hover:hover .img-zoom img {
-            transform: scale(1.1);
-          }
-
-          /* Responsive Tweaks */
-          @media (max-width: 900px) {
-            .split-container {
-              grid-template-columns: 1fr !important;
-            }
-            .list-card-item {
-              flex-direction: column;
-              text-align: center;
-            }
+          @media (max-width: 650px) {
+            .list-card-item { flex-direction: column; text-align: center; }
+            .thumbnail-box { width: 100% !important; height: 180px !important; }
           }
         `}
       </style>
@@ -218,8 +189,9 @@ const WhyJoinUs = () => {
         <header className="reveal" ref={addRef}>
           <h1 style={mainTitle}>Why Join Us</h1>
           <p style={subTitle}>
-            Let your children explore the joy of learning with us in a warm,
-            friendly and inspiring campus environment tailored for growth.
+            Established in 1990 by Founder Mrs. A. Shakila Banu, we provide a
+            unique continuum of education that supports diverse needs and
+            imparts quality education with heart.
           </p>
         </header>
 
@@ -230,12 +202,7 @@ const WhyJoinUs = () => {
               key={i}
               ref={addRef}
               className="reveal card-hover"
-              style={{
-                ...imageFrame,
-                marginBottom: 0,
-                height: "220px",
-                background: "#fff",
-              }}
+              style={{ ...imageFrame, height: "220px" }}
             >
               <div
                 className="img-zoom"
@@ -249,142 +216,75 @@ const WhyJoinUs = () => {
                 <img
                   src={src}
                   alt={`Gallery ${i}`}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    transition: "transform 0.5s ease",
-                  }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>
             </div>
           ))}
         </div>
 
-        {/* ---------- EXPLORE SECTION ---------- */}
+        {/* ---------- EXPLORE SECTION (RIGHT SIDE ONLY / CENTERED) ---------- */}
         <h2 style={sectionTitle} className="reveal" ref={addRef}>
           Explore Our World
         </h2>
 
-        <p
-          style={{ ...subTitle, marginBottom: "50px" }}
-          className="reveal"
-          ref={addRef}
-        >
-          Carefully designed programmes, activities and support services help
-          every child grow with confidence.
+        <p style={subTitle} className="reveal" ref={addRef}>
+          Carefully designed programmes and services managed by the JDC Sparsha
+          Educational Trust help every child grow with confidence.
         </p>
 
-        <div
-          style={
-            isMobile
-              ? { ...splitSection, gridTemplateColumns: "1fr" }
-              : splitSection
-          }
-          className="split-container"
-        >
-          {/* LEFT: IMAGE COLLAGE CARD */}
-          <div style={card} className="reveal card-hover" ref={addRef}>
-            <div style={{ ...imageFrame, height: "300px" }}>
-              <img
-                src="https://images.pexels.com/photos/8612969/pexels-photo-8612969.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Main"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "12px",
-                }}
-              />
-            </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "10px",
-              }}
+        <div style={featureContainer}>
+          {FEATURES.map((item, index) => (
+            <a
+              key={index}
+              href={item.href}
+              className="reveal card-hover list-card-item"
+              ref={addRef}
+              style={listCard}
             >
-              {GALLERY.slice(0, 3).map((src, i) => (
-                <div
-                  key={i}
-                  style={{
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                    height: "80px",
-                    border: `2px solid ${borderGreen}`,
-                  }}
-                >
-                  <img
-                    src={src}
-                    alt="mini"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* RIGHT: FEATURE LIST */}
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {FEATURES.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="reveal card-hover list-card-item"
-                ref={addRef}
-                style={listCard}
+              {/* Thumbnail */}
+              <div
+                className="thumbnail-box"
+                style={{
+                  width: "120px",
+                  height: "120px",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  flexShrink: 0,
+                  border: `2px solid ${borderGreen}`,
+                }}
               >
-                {/* Thumbnail */}
-                <div
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+
+              {/* Content */}
+              <div>
+                <h3
                   style={{
-                    width: "100px",
-                    height: "100px",
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    flexShrink: 0,
-                    border: `2px solid ${borderGreen}`,
+                    color: green,
+                    margin: "0 0 8px 0",
+                    fontSize: "22px",
                   }}
                 >
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-
-                {/* Content */}
-                <div>
-                  <h3
-                    style={{
-                      color: green,
-                      margin: "0 0 8px 0",
-                      fontSize: "20px",
-                    }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p
-                    style={{
-                      margin: 0,
-                      fontSize: "15px",
-                      color: "#555",
-                      lineHeight: "1.5",
-                    }}
-                  >
-                    {item.text}
-                  </p>
-                </div>
-              </a>
-            ))}
-          </div>
+                  {item.title}
+                </h3>
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "16px",
+                    color: "#555",
+                    lineHeight: "1.5",
+                  }}
+                >
+                  {item.text}
+                </p>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </div>

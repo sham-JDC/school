@@ -28,8 +28,8 @@ function App() {
         <Route path="/join" element={<WhyJoinUs />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/glossary" element={<GlossaryPage />} />
-        <Route path="/events" element={<Awards />} />
-        <Route path="/awards" element={<Events />} />
+        <Route path="/awards" element={<Awards />} />
+        <Route path="/events" element={<Events />} />
 
         {/* overview */}
       </Routes>

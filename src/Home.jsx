@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Clock, Heart, BookOpen, Users } from "lucide-react";
+// Ensure you have these images in your assets folder or replace with placeholders
 import image from "./assets/Yoga Session1.jpg";
 import image1 from "./assets/Secret Santa1.jpg";
 import image2 from "./assets/Childrens Day with Naseema.jpg";
@@ -35,7 +36,7 @@ const Home = () => {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
     revealRefs.current.forEach((el) => el && observer.observe(el));
@@ -47,6 +48,40 @@ const Home = () => {
       revealRefs.current.push(el);
     }
   };
+
+  // --- DATA: HISTORY TIMELINE ---
+  const historyEvents = [
+    {
+      year: "1990",
+      title: "The Beginning",
+      icon: <Clock size={24} color="#fff" />,
+      text: "Tom and Jerry Nursery School blossomed as a regular school catering to children aged 2 to 5 years, marking the start of our journey in early childhood education.",
+    },
+    {
+      year: "1991-1992",
+      title: "The Turning Point",
+      icon: <Heart size={24} color="#fff" />,
+      text: "A 5-year-old physically challenged brother of a student visited the school. Noticed by Mrs. Banu, he began attending for a few hours. Unable to sit or perform activities initially, he showed remarkable progress over the ensuing months. This improvement delighted his parents and ignited Mrs. Banu's mission towards special education.",
+    },
+    {
+      year: "1993",
+      title: "Tom and Jerry Special School",
+      icon: <Users size={24} color="#fff" />,
+      text: "Happy parents helped spread the word about the improvement in their special children. As numbers rose, Tom and Jerry Special School was born as a separate entity to dedicatedly serve children with special needs.",
+    },
+    {
+      year: "2003",
+      title: "Sparsha Academy",
+      icon: <BookOpen size={24} color="#fff" />,
+      text: "The management realized the need for a continuum of education, especially for special children. Sparsha Academy was formed to provide an educational roadmap for learning disabilities and slow learners.",
+    },
+    {
+      year: "2004",
+      title: "JDC Sparsha Educational Trust",
+      icon: <Users size={24} color="#fff" />,
+      text: "Established by Founder and Managing Trustee Mrs. A. Shakila Banu. Named after our Great Grand Parents, the Trust ensures compliance with statutory requirements and manages all three institutions.",
+    },
+  ];
 
   // --- STYLES ---
   const outer = {
@@ -90,7 +125,7 @@ const Home = () => {
 
   const sectionTitle = {
     textAlign: "center",
-    fontSize: "36px",
+    fontSize: "clamp(2rem, 4vw, 36px)",
     color: green,
     fontWeight: "700",
     marginBottom: "50px",
@@ -124,7 +159,40 @@ const Home = () => {
             border-color: ${green};
           }
 
-          /* Hero Animations */
+          /* Timeline Styles */
+          .timeline-item {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 40px;
+          }
+          .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: -40px;
+            width: 4px;
+            background: ${borderGreen};
+          }
+          .timeline-item:last-child::before {
+            bottom: 0;
+          }
+          .timeline-dot {
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: ${green};
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          }
+
+          /* Animations */
           @keyframes zoomSlow {
             from { transform: scale(1); }
             to { transform: scale(1.1); }
@@ -182,7 +250,7 @@ const Home = () => {
           style={{
             position: "absolute",
             inset: 0,
-            background: "rgba(11, 61, 27, 0.6)",
+            background: "rgba(11, 61, 27, 0.7)",
             zIndex: 2,
           }}
         ></div>
@@ -218,7 +286,7 @@ const Home = () => {
               lineHeight: "1.6",
             }}
           >
-            Very Unique and Supports Diverse needs in Imparting Education
+            A Continuum of Education: From Nursery to Special Needs
           </p>
           <div style={{ marginTop: "60px", animation: "bounce 2s infinite" }}>
             <ArrowDown size={48} color="#fff" />
@@ -226,64 +294,152 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- OVERVIEW SECTION --- */}
+      {/* --- OUR JOURNEY (HISTORY) --- */}
       <section style={container}>
         <h2 style={sectionTitle} className="reveal" ref={addRef}>
-          Our Schools
+          Our Journey
         </h2>
-
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "30px",
+            maxWidth: "800px",
+            margin: "0 auto",
+            paddingLeft: "20px",
           }}
         >
-          {[
-            {
-              icon: "🐱",
-              title: "Tom and Jerry Nursery School",
-              text: "Caters to Normal Children",
-            },
-            {
-              icon: "🌟",
-              title: "Tom and Jerry Special School",
-              text: "Caters to Special Children",
-            },
-            {
-              icon: "🎓",
-              title: "Sparsha Academy",
-              text: "Caters to Learning Disability Children & Slow Learners",
-            },
-          ].map((item, i) => (
-            <div
-              key={i}
-              style={card}
-              className="reveal card-hover"
-              ref={addRef}
-            >
-              <div style={iconBox}>{item.icon}</div>
-              <h3
+          {historyEvents.map((event, i) => (
+            <div key={i} className="timeline-item reveal" ref={addRef}>
+              <div className="timeline-dot">{event.icon}</div>
+              <div
                 style={{
-                  textAlign: "center",
-                  color: green,
-                  marginBottom: "15px",
-                  fontSize: "1.4rem",
+                  background: "#fff",
+                  padding: "20px 25px",
+                  borderRadius: "15px",
+                  boxShadow: "0 5px 15px rgba(0,0,0,0.05)",
+                  borderLeft: `5px solid ${green}`,
                 }}
               >
-                {item.title}
-              </h3>
-              <p
-                style={{
-                  textAlign: "center",
-                  color: "#555",
-                  fontSize: "1.1rem",
-                }}
-              >
-                {item.text}
-              </p>
+                <span
+                  style={{
+                    display: "block",
+                    color: borderGreen,
+                    fontWeight: "800",
+                    fontSize: "1.2rem",
+                    marginBottom: "5px",
+                  }}
+                >
+                  {event.year}
+                </span>
+                <h3
+                  style={{
+                    color: darkGreen,
+                    fontSize: "1.4rem",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {event.title}
+                </h3>
+                <p style={{ color: "#555", lineHeight: "1.6" }}>{event.text}</p>
+              </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* --- OVERVIEW SCHOOLS SECTION --- */}
+      <section style={{ backgroundColor: lightGreen, padding: "80px 20px" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <h2 style={sectionTitle} className="reveal" ref={addRef}>
+            Our Institutions
+          </h2>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "30px",
+            }}
+          >
+            {[
+              {
+                icon: "🐱",
+                title: "Tom and Jerry Nursery School",
+                text: "Established 1990. Our foundation school catering to regular children aged 2-5 years with love and care.",
+              },
+              {
+                icon: "🌟",
+                title: "Tom and Jerry Special School",
+                text: "Established 1993. Born from a mission to help special children perform regular activities and achieve progress.",
+              },
+              {
+                icon: "🎓",
+                title: "Sparsha Academy",
+                text: "Established 2003. Providing a roadmap and continuum of education for children with learning disabilities.",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                style={card}
+                className="reveal card-hover"
+                ref={addRef}
+              >
+                <div style={iconBox}>{item.icon}</div>
+                <h3
+                  style={{
+                    textAlign: "center",
+                    color: green,
+                    marginBottom: "15px",
+                    fontSize: "1.4rem",
+                  }}
+                >
+                  {item.title}
+                </h3>
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "#555",
+                    fontSize: "1.1rem",
+                    lineHeight: "1.5",
+                  }}
+                >
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- TRUST INFO --- */}
+      <section style={container}>
+        <div
+          className="reveal"
+          ref={addRef}
+          style={{
+            background: "#fff",
+            borderRadius: "30px",
+            padding: "40px",
+            border: `2px dashed ${green}`,
+            textAlign: "center",
+          }}
+        >
+          <h3 style={{ color: green, fontSize: "2rem", marginBottom: "20px" }}>
+            JDC Sparsha Educational Trust
+          </h3>
+          <p
+            style={{
+              fontSize: "1.1rem",
+              lineHeight: "1.8",
+              color: "#444",
+              maxWidth: "900px",
+              margin: "0 auto",
+            }}
+          >
+            The Trust was established in <strong>2004</strong> by Founder and
+            Managing Trustee <strong>Mrs. A. Shakila Banu</strong>. Named in
+            honor of our Great Grandparents, it serves as the backbone for all
+            our schools, managing statutory compliance and operational
+            requirements to ensure excellence in education since inception.
+          </p>
         </div>
       </section>
 
@@ -333,17 +489,6 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Vertical Divider for desktop, Hidden on mobile via Flex wrap behavior roughly */}
-            <div
-              style={{
-                width: "4px",
-                background: borderGreen,
-                borderRadius: "2px",
-                display:
-                  "none" /* Logic handled by flex gap usually, keeping simple */,
-              }}
-            ></div>
-
             <div
               style={{
                 flex: 1,
@@ -390,24 +535,24 @@ const Home = () => {
         >
           {[
             {
-              num: "01",
+              num: "",
               title: "Low Student-Teacher Ratio",
-              text: "We adhere to a very Low Student to Teacher Ratio in all our schools.",
+              text: "We maintain limited class sizes to guarantee individual attention. This allows our educators to understand the unique learning pace of every child and provide the specific guidance they need.",
             },
             {
-              num: "02",
+              num: "",
               title: "Personalised Care",
-              text: "We provide Personalised care, Love, and Affection to all the children.",
+              text: "We believe education extends beyond books. We treat every child with deep empathy and affection, tailoring our support to meet their specific physical, emotional, and cognitive requirements.",
             },
             {
-              num: "03",
+              num: "",
               title: "Friendly Atmosphere",
-              text: "Learning happens in a very Cordial & Friendly Atmosphere.",
+              text: "Our campus is a stress-free zone. We cultivate a warm, family-like environment where children feel safe to explore, express themselves, and grow without the fear of judgment.",
             },
           ].map((val, i) => (
             <div
               key={i}
-              style={{ ...card, padding: "15px" }}
+              style={{ ...card, padding: "20px" }}
               className="reveal card-hover"
               ref={addRef}
             >

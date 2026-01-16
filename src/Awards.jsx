@@ -1,4 +1,8 @@
 import React from "react";
+// Import local assets as requested
+import img1 from "./assets/1.jpg";
+import img2 from "./assets/1.jpg";
+import img3 from "./assets/1.jpg";
 
 export default function Awards() {
   return (
@@ -347,7 +351,7 @@ export default function Awards() {
         <div className="awards-header">
           <h1 className="awards-title">Awards & Achievements</h1>
           <div className="decorative-line"></div>
-          <p className="awards-subtitle">Celebrating Excellence and Success</p>
+          <p className="awards-subtitle">Celebrating Excellence Since 1990</p>
         </div>
 
         {/* ✅ AWARD 1 */}
@@ -356,23 +360,25 @@ export default function Awards() {
           <h3>Kalaangana – Best School Award</h3>
           <div className="award-year">2013 • 2020 • 2024 • 2025</div>
           <p>
-            Fourth-time recipient of the Best School award for Overall
-            Performance at Kalaangana, an Art & Cultural event organised by
-            Information and Resource Center (IRC) & Rotary, Bangalore West for
-            Special Schools.
+            Managed by the <strong>JDC Sparsha Educational Trust</strong>, which
+            was established by Founder and Managing Trustee{" "}
+            <strong>Mrs. A. Shakila Banu</strong> in 2004, our institutions
+            continue to reach new heights.
             <br />
             <br />
-            In 2025, our Special School was awarded{" "}
+            We are a fourth-time recipient of the Best School award for Overall
+            Performance at Kalaangana, an Art & Cultural event organised for
+            Special Schools. In 2025, our Special School was awarded{" "}
             <strong className="award-highlight">
               1st place out of 38 schools
-            </strong>
+            </strong>{" "}
             and won{" "}
             <strong className="award-highlight">more than 39 prizes</strong>{" "}
             across various events.
           </p>
 
           <div className="award-image">
-            <img src="kalaangana Shield.jpg" alt="Kalaangana Award" />
+            <img src={img1} alt="Kalaangana Award" />
           </div>
         </div>
 
@@ -382,22 +388,20 @@ export default function Awards() {
           <h3>Zonal Level Special Olympics</h3>
           <div className="award-year">2024</div>
           <p>
-            Zonal Level Special Olympics (Kolar, Bangalore City, Bangalore
-            Rural, Chikkaballapur, and Tumkur) was held on 11th and 12th
-            November 2024.
+            Building on the mission ignited by Mrs. Banu towards special
+            children following the remarkable progress of our first special
+            needs student in 1991, we proudly participate in major athletic
+            competitions.
             <br />
             <br />
-            Around{" "}
-            <strong className="award-highlight">
-              300 participants from 18 schools
-            </strong>{" "}
-            took part. Our Special School proudly won{" "}
-            <strong className="award-highlight">5 medals</strong> —
-            <strong className="award-highlight">2 Silver and 3 Bronze</strong>.
+            At the 2024 Zonal Level Special Olympics, our Special School proudly
+            won <strong className="award-highlight">5 medals</strong> —{" "}
+            <strong className="award-highlight">2 Silver and 3 Bronze</strong> —
+            competing against 300 participants from 18 schools.
           </p>
 
           <div className="award-image">
-            <img src="Nursery Sports Day.jpg" alt="Special Olympics" />
+            <img src={img2} alt="Special Olympics" />
           </div>
         </div>
 
@@ -407,17 +411,21 @@ export default function Awards() {
           <h3>Kreeda Chetana</h3>
           <div className="award-year">2024</div>
           <p>
-            Rotary Bangalore Vijayanagar organised "Kreeda Chetana‑24" on 23rd
-            November 2024.
+            Since <strong>Tom and Jerry Special School</strong> was born as a
+            separate entity in 1993, we have consistently strived for excellence
+            in both statutory and operational requirements.
             <br />
-            <br />A total of{" "}
-            <strong className="award-highlight">37 students</strong> from our
-            Special School participated and won several prizes across multiple
-            events.
+            <br />
+            At "Kreeda Chetana‑24," organized by Rotary Bangalore Vijayanagar, a
+            total of <strong className="award-highlight">
+              37 students
+            </strong>{" "}
+            from our Special School participated and won several prizes across
+            multiple events.
           </p>
 
           <div className="award-image">
-            <img src="kreeda.jpg" alt="Kreeda Chetana" />
+            <img src={img3} alt="Kreeda Chetana" />
           </div>
         </div>
       </div>
