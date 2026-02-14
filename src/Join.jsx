@@ -229,7 +229,7 @@ const WhyJoinUs = () => {
         </h2>
 
         <p style={subTitle} className="reveal" ref={addRef}>
-          Carefully designed programmes and services managed by the JDC Sparsha
+          Programmes and services managed by the JDC Sparsha
           Educational Trust help every child grow with confidence.
         </p>
 

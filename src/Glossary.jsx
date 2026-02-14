@@ -425,16 +425,10 @@ export default function GlossaryPage() {
         'A number of terms including "intellectual impairment", "cognitive impairment", "mental handicap" and "learning difficulty" are used to describe individuals whose natural reasoning abilities, "common sense" and ability to look after themselves independently, are because of abnormalities of or early injury to the brain, insufficient to allow independent function in society. Mental retardation is a disability characterized by significant limitations both in intellectual function and in adaptive behavior as expressed in conceptual social and practical adaptive skills.',
       color: "#f59e0b",
     },
-    {
-      icon: Heart,
-      title: "Multiple Disabilities",
-      description:
-        "Our training programme covers a wide range of disabilities by inculcating the various therapies such as Hand function improvement, Fine motor skills, visual motor skills, Hand eye coordination, pre writing skills, speech and music therapy and pre vocational training. We have a number of therapists that visit the school on a regular basis.",
-      color: "#ec4899",
-    },
+ 
     {
       icon: BookOpen,
-      title: "Learning Disabilities/Difficulties",
+      title: "Learning Difficulties",
       description:
         "Learning disabilities refer to a group of disorders that affect the ability to learn, understand, or use spoken or written language, do mathematical calculations, coordinate movements, or direct attention. Despite having average or above-average intelligence, individuals with learning disabilities may struggle with specific academic tasks.",
       color: "#14b8a6",

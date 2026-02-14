@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ArrowDown, Clock, Heart, BookOpen, Users } from "lucide-react";
 // Ensure you have these images in your assets folder or replace with placeholders
-import image from "./assets/Yoga Session1.jpg";
+import image from "./assets/Nursery Unit1.jpeg";
 import image1 from "./assets/Secret Santa1.jpg";
 import image2 from "./assets/Childrens Day with Naseema.jpg";
 
@@ -36,7 +36,7 @@ const Home = () => {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     revealRefs.current.forEach((el) => el && observer.observe(el));
@@ -286,7 +286,7 @@ const Home = () => {
               lineHeight: "1.6",
             }}
           >
-            A Continuum of Education: From Nursery to Special Needs
+            Imparting Excellence for Diverse Educational Needs
           </p>
           <div style={{ marginTop: "60px", animation: "bounce 2s infinite" }}>
             <ArrowDown size={48} color="#fff" />

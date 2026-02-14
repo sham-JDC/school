@@ -2,13 +2,16 @@ import React, { useEffect, useRef } from "react";
 
 // Keep your local import.
 // Note: Ensure this file actually exists in your assets folder.
-import img1 from "./assets/Nursery Unit2.jpeg";
+import img1 from "./assets/Nursery Unit1.jpeg";
 import img2 from "./assets/Computer Room1.jpg";
 import img3 from "./assets/Indoor Gym1.jpeg";
 import img4 from "./assets/Outdoor Gym.jpeg";
 import img5 from "./assets/Mini Sports Area.jpeg";
 import img6 from "./assets/Yoga Day2.jpg";
 import img7 from "./assets/Nursery Sports Day1.jpg";
+import imgx from "./assets/Nursery Unit2.jpeg";
+import imgy from "./assets/NIOS Class.jpg";
+
 
 const ProgramsServices = () => {
   const green = "#1b7f3a";
@@ -19,15 +22,15 @@ const ProgramsServices = () => {
   // I have used high-quality Unsplash images here.
   // You can replace these URLs with your local imports (img2, img3, etc.) later.
 
-  const imgSpecial =img1// Therapy/Special Ed vibe
-  const imgAcademy =img1 // Classroom/Academy vibe
+  const imgSpecial = img1; // Therapy/Special Ed vibe
+  const imgAcademy = imgy; // Classroom/Academy vibe
 
   const imgComputer = img2;
   const imgIndoorPlay = img3; // Ball pit/Indoor fun
   const imgOutdoor = img4;
-  const imgIndoorSports =img5// Table Tennis/Sports
-  const imgPhysical =img7
-  const imgYoga =img6
+  const imgIndoorSports = img5; // Table Tennis/Sports
+  const imgPhysical = img7;
+  const imgYoga = img6;
   /* ---------- SCROLL ANIMATION ---------- */
   const revealRefs = useRef([]);
 
@@ -40,7 +43,7 @@ const ProgramsServices = () => {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
 
     revealRefs.current.forEach((el) => el && observer.observe(el));
@@ -200,13 +203,13 @@ const ProgramsServices = () => {
             {
               title: "Tom & Jerry Nursery School",
               img: img1, // Using your local import
-              desc: "Pre-primary education with activity-based learning.",
+              desc: "Pre-primary education with activity-based learning.\n Offers Pre-primary Education for the Normal Children",
               age: "1 yr 10 months – 6 yrs",
               items: ["Play Group", "Pre-Nursery", "LKG & UKG"],
             },
             {
               title: "Tom & Jerry Special School",
-              img: imgSpecial,
+              img: imgx,
               desc: "Therapeutic and educational support for special needs.",
               age: "2 – 30 yrs",
               items: ["Physiotherapy", "Speech Therapy", "Sensory Training"],
