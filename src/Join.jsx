@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from "react";
 // Import local assets 1-10
-import img1 from "./assets/1.jpg";
-import img2 from "./assets/1.jpg";
-import img3 from "./assets/1.jpg";
-import img4 from "./assets/1.jpg";
-import img5 from "./assets/1.jpg";
-import img6 from "./assets/1.jpg";
-import img7 from "./assets/1.jpg";
-import img8 from "./assets/1.jpg";
-import img9 from "./assets/1.jpg";
-import img10 from "./assets/1.jpg";
+import img1 from "./assets/Music Room.jpg";
+import img2 from "./assets/Nursery Unit1.jpeg";
+import img3 from "./assets/NIOS Class.jpg";
+import img4 from "./assets/Childrens Day with Naseema.jpg";
+import img5 from "./assets/Outing2.jpg";
+import img6 from "./assets/Environment Day1.jpg";
+import img7 from "./assets/Outdoor Gym.jpeg";
+import img8 from "./assets/Yoga Session1.jpg";
+import img9 from "./assets/art.jpg";
+import img10 from "./assets/Outing3.jpg";
 
 const WhyJoinUs = () => {
   // --- THEME CONSTANTS ---
@@ -229,7 +229,7 @@ const WhyJoinUs = () => {
         </h2>
 
         <p style={subTitle} className="reveal" ref={addRef}>
-          Programmes and services managed by the JDC Sparsha
+          Carefully designed programmes and services managed by the JDC Sparsha
           Educational Trust help every child grow with confidence.
         </p>
 

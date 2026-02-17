@@ -4,12 +4,12 @@ import image from "./assets/Yoga Session1.jpg";
 import image1 from "./assets/Secret Santa1.jpg";
 import image2 from "./assets/Childrens Day with Naseema.jpg";
 // Program Card images
-import card1 from "./assets/1.jpg";
-import card2 from "./assets/1.jpg";
-import card3 from "./assets/1.jpg";
-import card4 from "./assets/1.jpg";
-import card5 from "./assets/1.jpg";
-import card6 from "./assets/1.jpg";
+import card1 from "./assets/art.jpg";
+import card2 from "./assets/Yoga Day.jpg";
+import card3 from "./assets/Vocational5.jpg";
+import card4 from "./assets/Outing6.jpg";
+import card5 from "./assets/Carnival3.jpg";
+import card6 from "./assets/Vocational2.jpg";
 
 export default function Studentlife() {
   // --- SLIDER STATE ---

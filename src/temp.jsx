@@ -12,7 +12,6 @@ import img7 from "./assets/Nursery Sports Day1.jpg";
 import imgx from "./assets/Nursery Unit2.jpeg";
 import imgy from "./assets/NIOS Class.jpg";
 
-
 const ProgramsServices = () => {
   const green = "#1b7f3a";
   const yellowBg = "#fffbea";
@@ -203,7 +202,7 @@ const ProgramsServices = () => {
             {
               title: "Tom & Jerry Nursery School",
               img: img1, // Using your local import
-              desc: "Pre-primary education with activity-based learning.\n Offers Pre-primary Education for the Normal Children",
+              desc: `Pre-primary education with activity-based learning.\n Offering Pre-primary Education for the Normal Children`,
               age: "1 yr 10 months – 6 yrs",
               items: ["Play Group", "Pre-Nursery", "LKG & UKG"],
             },
