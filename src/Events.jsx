@@ -1,16 +1,16 @@
 import React from "react";
 // Import local assets 1-11
 import img1 from "./assets/1.jpg";
-import img2 from "./assets/1.jpg";
-import img3 from "./assets/1.jpg";
+import img2 from "./assets/Ganesh Chaturthi.jpg";
+import img3 from "./assets/Krishna Janmashtami.jpg";
 import img4 from "./assets/1.jpg";
-import img5 from "./assets/1.jpg";
-import img6 from "./assets/1.jpg";
+import img5 from "./assets/Yoga Session.jpg";
+import img6 from "./assets/Christmas.jpg";
 import img7 from "./assets/1.jpg";
-import img8 from "./assets/1.jpg";
+import img8 from "./assets/Shankranthi.jpg";
 import img9 from "./assets/1.jpg";
-import img10 from "./assets/1.jpg";
-import img11 from "./assets/1.jpg";
+import img10 from "./assets/Mini Sports Area.jpeg";
+import img11 from "./assets/Carnival.jpg";
 
 export default function Events() {
   return (

@@ -294,57 +294,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- OUR JOURNEY (HISTORY) --- */}
-      <section style={container}>
-        <h2 style={sectionTitle} className="reveal" ref={addRef}>
-          Our Journey
-        </h2>
-        <div
-          style={{
-            maxWidth: "800px",
-            margin: "0 auto",
-            paddingLeft: "20px",
-          }}
-        >
-          {historyEvents.map((event, i) => (
-            <div key={i} className="timeline-item reveal" ref={addRef}>
-              <div className="timeline-dot">{event.icon}</div>
-              <div
-                style={{
-                  background: "#fff",
-                  padding: "20px 25px",
-                  borderRadius: "15px",
-                  boxShadow: "0 5px 15px rgba(0,0,0,0.05)",
-                  borderLeft: `5px solid ${green}`,
-                }}
-              >
-                <span
-                  style={{
-                    display: "block",
-                    color: borderGreen,
-                    fontWeight: "800",
-                    fontSize: "1.2rem",
-                    marginBottom: "5px",
-                  }}
-                >
-                  {event.year}
-                </span>
-                <h3
-                  style={{
-                    color: darkGreen,
-                    fontSize: "1.4rem",
-                    marginBottom: "10px",
-                  }}
-                >
-                  {event.title}
-                </h3>
-                <p style={{ color: "#555", lineHeight: "1.6" }}>{event.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* --- OVERVIEW SCHOOLS SECTION --- */}
       <section style={{ backgroundColor: lightGreen, padding: "80px 20px" }}>
         <div style={{ maxWidth: "1200px", margin: "0 auto" }}>

@@ -1,7 +1,7 @@
 import React from "react";
 // Import local assets as requested
-import img1 from "./assets/1.jpg";
-import img2 from "./assets/1.jpg";
+import img1 from "./assets/Kalaangana Shield.jpg";
+import img2 from "./assets/Nursery Sports Day1.jpg";
 import img3 from "./assets/1.jpg";
 
 export default function Awards() {

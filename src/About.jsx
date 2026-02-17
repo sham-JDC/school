@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import img1 from "./assets/shan4.jpg";
 import img2 from "./assets/shakila2.jpg";
-import img3 from "./assets/Nursery Unit1.jpeg";
+import img3 from "./assets/Outing1.jpg";
 import img4 from "./assets/Mini Sports Area.jpeg";
 import img5 from "./assets/Outing3.jpg";
 
@@ -33,7 +33,7 @@ const AboutUsSection = () => {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
 
     revealRefs.current.forEach((el) => el && observer.observe(el));
